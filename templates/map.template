@@ -1,0 +1,95 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+    <h2>Sample and Herd</h2>
+
+    <form action="/Samples/Map" method="post">    
+        <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
+    <h6>Sample Name: <strong><span id="name">{{ sample_name }}</span></strong></h6>
+    <h6>Sample Id: <span id="guid">{{ sample_id }}</span></h6>
+    <input type="text" class="form-input hidden" name="id" id="sample_name" value={{ sample_name }} />
+</form>
+<div class="pull-right">
+    <a class="btn-primary btn" href="/Neighbour/Index/b1460e0f-3ab8-4d08-a885-4fcd67078fb9">Genetic Related</a>
+    <a class="btn-success btn" href="/Phylogeny/Tree/b1460e0f-3ab8-4d08-a885-4fcd67078fb9">Phylogeny</a>
+    <a class="btn-warning btn " href="/Analysis/TreeGraph/b1460e0f-3ab8-4d08-a885-4fcd67078fb9">Graph</a>
+
+</div>
+
+    <h6>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></h6>
+    <form action="/Herd" method="post">    <h6>
+        Herd: <input type="text", class="form-input hidden alert-link" name="id" id="herd_id" value={{ herd_id }} />
+        <input type="submit" value={{ herd_id }} id="herd_search" class="btn-link" />
+    </h6>
+    </form>    <h6>
+        Location: <span id="map_x">{{ map_x }},</span><span id="map_y"> {{ map_y }} </span>
+    </h6>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+<!-- Other Guids--> 
+
+    {% if other_guids|length >= 1 %}
+    <h4>Other matching results:</h4>
+    {% for guid in other_guids %}
+    <form action="/Samples/Map" method="post">
+    <div>{{ sample_name }}
+        <input type="text", class="form-input hidden alert-link" name="id" id="sample_guid" value={{ guid }} />
+        <input type="submit" value={{ guid }} id="search_submit" class="btn-link" />
+    </div>
+    </form>
+    {% endfor %}
+    {%endif %}
+
+    <!-- Movements--> 
+
+    {% if movement_data and movement_data|length > 0 %}
+        <hr>
+        <h4>Cattle Movements</h4>
+                <table class="table table-striped" id="move_table">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>From </th>
+                            <th>To </th>
+                            <th>Stay</th>
+                            <th><input type="checkbox" id="check_all_movements" onclick="check_all_movements();" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for move in movement_data %}
+                        <tr>
+                                    <td>{{ move['LocationId'] }} <br/> {{ move['LocationName'] }}</td>
+                                    <td>{{ move['StartDate'] }}</td>
+                                    <td>{{ move['EndDate'] }}</td>
+                                    <td>{{ move['StayLength'] }}</td>
+                                    <td>
+                                        {% set map_x = move['X'] %}
+                                        {% set map_y = move['Y'] %}
+                                        {% set from = move['StartDate'] %}
+                                        {% set stay = move['StayLength'] %}
+                                        {% set map_x_y = map_x + '_' + map_y + '_' + from + '_' + stay %}
+                                        <input type="checkbox" class="move_tick" id={{ map_x_y }} />
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                    </tbody>
+
+                </table>
+                {% endif %}
+    </div>
+    <div class="col-md-7">
+        <div id="mapid"></div>
+        <p><span id="guid">{{ sample_id }}</span><span id="name">{{ sample_name }}</span></p>
+    </div>
+    </div>
+
+ {% endblock content %}
+
+{% block scripts %}
+    <script src="/static/scripts/app/geotools.js"></script>
+    <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
+    <script src="/static/scripts/app/map.js"></script>
+{% endblock scripts %}

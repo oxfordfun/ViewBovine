@@ -1,2 +1,2 @@
 # Fan.Flask
-Flask application to view nextflow pipelines.
+Flask application to view Bovine
