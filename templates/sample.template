@@ -2,14 +2,14 @@
 
 {% block content %}
 
- <div class="jumbotron">
-    <h2>Search a sample</h2>
-    <p class="lead">via Guid (eg. b1460e0f-3ab8-4d08-a885-4fcd67078fb9) or Name (eg. AF-12-00008-18)</p>
-    <hr />
-    <form action="/Samples/Map" method="post">        
-        <input type="text" , placeholder="Sample Guid or Name" class="form-input col-md-9" name="id" id="sample_guid"  required oninvalid="this.setCustomValidity('Please input a Sample Guid or Name')"/>
-        <input type="submit" value="Search" id="search_submit" />
-    </form>    
-<hr />
+<div class="jumbotron">
+  <h2>Search a sample</h2>
+  <p class="lead">via Guid (eg. b1460e0f-3ab8-4d08-a885-4fcd67078fb9) or Name (eg. AF-12-00008-18)</p>
+  <hr />
+  <form action="/Samples/Map" method="post">        
+    <input type="text" , placeholder="Sample Guid or Name" class="form-input col-md-9" name="id" id="sample_guid"  required oninvalid="this.setCustomValidity('Please input a Sample Guid or Name')"/>
+    <input type="submit" value="Search" id="search_submit" />
+  </form>    
+  <hr />
 </div>
 {% endblock content %}
