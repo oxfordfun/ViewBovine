@@ -6,19 +6,18 @@ from flask import Flask, render_template, abort, request
 
 myapp = Flask(__name__)
 
-@myapp.route('/hello/<names>')
-def hello(names):
-    if request.args.get('hide') == 'yes':
-        abort(404)
-
-    return render_template('hello.template', names=names.split(','))
+@myapp.route('/')
+def home():
+    return render_template('home.template')
 
 @myapp.route('/sample')
 def sample():
     return render_template('sample.template')
 
-@myapp.route('/sample/map/<sample_name>')
-def sample_map(sample_name):
+@myapp.route('/sample/map/')
+def sample_map():
+    sample_name = request.args.get("sample_name")
+
     req_lookup = requests.get('http://192.168.7.30:5008/lookup/{0}'.format(sample_name))
     names_guids = json.loads(req_lookup.text)
 
