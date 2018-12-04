@@ -1,0 +1,26 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<div class="container body-content">
+        
+<h2>Genetic Related Samples</h2>
+
+<form action="/Samples/Map" method="post">    <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
+    <h6>Sample Name: <strong><span id="name">sample name</span></strong></h6>
+    <h6>Sample Id: <span id="guid">{{ sample_guid }}}</span></h6>
+    <input type="text" class="form-input hidden" name="id" id="sample_name" value=AF-12-00008-18 />
+</form>
+<div class="pull-right">
+    <a class="btn-primary btn" href="/Neighbour/Index/{{ sample_guid }}">Genetic Related</a>
+</div>
+<h6>Ear Tag: <strong><span id="eartag">UK705113600438</span></strong></h6>
+<form action="/Herd" method="post">    
+<h6>Herd: <input type="text", class="form-input hidden alert-link" name="id" id="herd_id" value=06071000301 />
+    <input type="submit" value=06071000301 id="herd_search" class="btn-link" />
+    </h6>
+</form>
+    <h6>Location: <span id="map_x">350300,</span><span id="map_y"> 351700 </span></h6>
+<hr />
+<div>
+{% endblock content %}

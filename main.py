@@ -51,8 +51,15 @@ def sample_map():
         other_guids=other_guids,
         movement_data=movement_data
         )
-# @myapp.route('/sample/map/')
-# def sample_map():
-#     sample_name = request.args.get("sample_name")
+
+@myapp.route('/sample/neighbour/')
+def sample_neighbour():
+    sample_guid = request.args.get("sample_guid")
+
+    # req_neighbours = requests.get(...)
+
+    return render_template('neighbour.template',
+        sample_guid = sample_guid
+    )
 
 myapp.run(debug=True)
