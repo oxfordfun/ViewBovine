@@ -1,5 +1,5 @@
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -16,45 +16,45 @@
     <link href="/static/css/site.css" rel="stylesheet"/>
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
 
-</head>
-<body>
+  </head>
+  <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">ViewBovine</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/Samples">Sample</a></li>
-                    <li><a href="/Herd">Herd</a></li>
-                    <li><a href="/Cluster">Cluster</a></li>
-                    <li><a href="/SubCluster">SubCluster</a></li>
-                    <li><a href="/Arboreta">Phylogeny</a></li>                    
-                    <li><a href="/Home/About">About</a></li>
-                </ul>
-            </div>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">ViewBovine</a>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/Samples">Sample</a></li>
+            <li><a href="/Herd">Herd</a></li>
+            <li><a href="/Cluster">Cluster</a></li>
+            <li><a href="/SubCluster">SubCluster</a></li>
+            <li><a href="/Arboreta">Phylogeny</a></li>                    
+            <li><a href="/Home/About">About</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="container body-content">
 
-    {% block content %}
-    {% endblock content %}
+      {% block content %}
+      {% endblock content %}
 
-    {% block scripts %}
-    {% endblock scripts %}
+      {% block scripts %}
+      {% endblock scripts %}
 
-    <hr />
-    <footer>
-           <p>Developed by Fan&Denis &copy; 2018 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
-        </footer>
+      <hr />
+      <footer>
+        <p>Developed by Fan&Denis &copy; 2018 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
+      </footer>
     </div>
-   
-</body>
+    
+  </body>
 
 </body>
 </html>
