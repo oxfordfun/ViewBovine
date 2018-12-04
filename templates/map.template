@@ -19,7 +19,8 @@
     Herd: <input type="text", class="form-input hidden alert-link" name="id" id="herd_id" value={{ herd_id }} />
     <input type="submit" value={{ herd_id }} id="herd_search" class="btn-link" />
   </h6>
-</form>    <h6>
+</form>
+<h6>
   Location: <span id="map_x">{{ map_x }},</span><span id="map_y"> {{ map_y }} </span>
 </h6>
 <hr />
@@ -79,7 +80,7 @@
   </div>
   <div class="col-md-7">
     <div id="mapid"></div>
-    <p><span id="guid">{{ sample_id }}</span><span id="name">{{ sample_name }}</span></p>
+    <p class="hidden"><span id="guid" >{{ sample_id }}</span><span id="name">{{ sample_name }}</span></p>
   </div>
 </div>
 
