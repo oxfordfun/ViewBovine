@@ -22,6 +22,7 @@ def sample_map():
     names_guids = json.loads(req_lookup.text)
 
     my_guid = names_guids[0][0]
+    sample_name = names_guids[0][1]
     other_guids = list()
     for guid,_ in names_guids[1:]:
         other_guids.append(guid)
@@ -50,5 +51,8 @@ def sample_map():
         other_guids=other_guids,
         movement_data=movement_data
         )
+# @myapp.route('/sample/map/')
+# def sample_map():
+#     sample_name = request.args.get("sample_name")
 
 myapp.run(debug=True)
