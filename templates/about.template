@@ -5,5 +5,5 @@
 <div class="jumbotron">
     <h1>ViewBovine</h1>
     <p class="lead">ViewBovine is a Web Portal for exploring WGS data of bovine tuberculosis (bTB), including samples information, their genetic relatedness and insights about their evolution.</p>
-</div>=
+</div>
 {% endblock content %}

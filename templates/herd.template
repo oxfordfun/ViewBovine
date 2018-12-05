@@ -4,7 +4,8 @@
 
 <div class="container body-content">
     <h2>Herd Sample Genetic Matrix</h2>
-    <form action="/Herd" data-ajax="true" id="form0" method="post">    <div class="row">
+    <form action="/herd" data-ajax="true" id="form_herd" method="get">    
+    <div class="row">
         <span class="col-md-6">Search a herd (via cphh [<strong>C</strong>]ounty [<strong>P</strong>]arish [<strong>H</strong>]olding [<strong>H</strong>]erd number, e.g. 06071000301)</span>
         <span><input size=9 class="form-input col-md-4", name="id" value=></span>
         <span class="col-md-3"><input type="submit" value="Search Herds" id="search_submit" class="btn btn-danger" /></span>
