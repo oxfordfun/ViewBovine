@@ -8,11 +8,11 @@
     <form action="/Samples/Map" method="post">
         <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
         <h6>Sample Name: <strong><span id="name">{{ sample_name }}</span></strong></h6>
-        <h6>Sample Id: <span id="guid">{{ sample_id }}</span></h6>
+        <h6>Sample Id: <span id="guid">{{ sample_guid }}</span></h6>
         <input type="text" class="form-input hidden" name="id" id="sample_name" value={{ sample_name }} />
     </form>
     <div class="pull-right">
-        <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_id }}">Genetic Related</a>
+        <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
     </div>
 
     <h6>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></h6>
@@ -27,36 +27,57 @@
     </h6>
     <hr />
     <div>
-        <hr />
         <div>
-            <form action="/Neighbour/Index/b1460e0f-3ab8-4d08-a885-4fcd67078fb9" data-ajax="true" id="form0" method="post">
+            <form action="/sample/neighbour" data-ajax="true" id="form0" method="get">
                 <div class="row">
-                    <input class="form-input hidden" data-val="true" data-val-required="The SampleId field is required." id="SampleId"
-                        name="SampleId" size="5" type="text" value="b1460e0f-3ab8-4d08-a885-4fcd67078fb9" />
+                    <input class="form-input hidden" data-val="true" id="SampleId" 
+                        name="sample_guid" size="5" type="text" value="{{ sample_guid }}" />
                     <span class="col-md-2">AGCT % (eg. 80)</span><span> <input class="form-input col-md-1" data-val="true"
                             data-val-number="The field Quality must be a number." data-val-required="The Quality field is required."
-                            id="Quality" max="90" min="60" name="Quality" size="2" type="number" value="80" /></span>
+                            id="Quality" max="90" min="60" name="quality" size="2" type="number" value="80" /></span>
                     <span class="col-md-2">SNP Distance (eg. 6)</span><span> <input class="form-input col-md-1" data-val="true"
                             data-val-number="The field Distance must be a number." data-val-required="The Distance field is required."
-                            id="Distance" max="50" min="0" name="Distance" size="5" type="number" value="6" /></span>
+                            id="Distance" max="50" min="0" name="distance" size="5" type="number" value="6" /></span>
                     <span class="col-md-2"><input type="submit" value="Search Genetic Related Samples" id="search_submit" class="btn btn-primary" /></span>
                 </div>
             </form>
             <br />
         </div>
-        
+    
         <div class="row">
+            {% if neighbours|length == 0 %}
             <div id="table_col" class="col-md-5">
                 <h4>Please set ACGT% and SNP distance to search genetic related samples.</h4>
             </div>
+            {% endif %}
             <div id="map_col" class="col-md-7">
                 <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Hide Table</p>
                 <div id="mapid"></div>
-                <p class="hidden">
-                    <span id="guid">AF-12-00008-18</span>
-                    <span id="name">b1460e0f-3ab8-4d08-a885-4fcd67078fb9</span>
+                <p >
+                    <span id="guid">{{ sample_guid }}</span>
+                    <span id="name">{{ sample_name }}</span>
                 </p>
             </div>
         </div>
+        {% if neighbours %}
+        <h4 id="sample_guid_result"> {{ sample_guid }} <strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
+        <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
+        <table class="table table-striped tablesorter" id="sample_table">
+            <thead>
+                <tr>
+                    <th><a href="#">#</a></th>
+                    <th><a href="#">Herd </a></th>
+                    <th><a href="#">Name</a></th>
+                    <th><a href="#">Map </a></th>
+                    <th><a href="#">Distance</a></th>
+                    <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for neighbour in neighbours %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
 
         {% endblock content %}

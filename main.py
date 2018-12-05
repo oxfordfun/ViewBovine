@@ -6,6 +6,27 @@ from flask import Flask, render_template, abort, request
 
 myapp = Flask(__name__)
 
+def call_api(kind, path):
+    if kind == 'tree':
+        host = 'http://192.168.7.30:5008'
+    if kind == 'map':
+        host = 'http://192.168.7.30:5006'
+
+    logging.warning('=> {0}{1}'.format(host, path))
+
+    try:
+        req_api = requests.get(host + path)
+    except Exception as e:
+        abort(500, description=e)
+
+    logging.warning('<= {0}'.format(req_api.text)[80:])
+
+    return req_api.text
+
+def get_neighbours(guid, distance=6, quality=80):
+    ret = call_api('tree', '/neighbours2/{0}?reference=R00000039&distance={1}&quality=0.8'.format(guid, distance, quality))
+    return ret
+
 @myapp.route('/')
 def home():
     return render_template('home.template')
@@ -13,10 +34,6 @@ def home():
 @myapp.route('/sample')
 def sample():
     return render_template('sample.template')
-
-def get_neighbours(guid, distance=6, quality=80):
-    r = requests.get('http://192.168.7.30:5006/neighbours/{0}?reference=R0000039&distance={1}&quality=0.{2}'.format(guid, distance, quality))
-    return r.json()
 
 @myapp.route('/sample/map/')
 def sample_map():
@@ -48,7 +65,7 @@ def sample_map():
 
     return render_template('map.template', 
         sample_name = sample_name,
-        sample_id = my_guid,
+        sample_guid = my_guid,
         eartag = eartag,
         map_x = map_x,
         map_y = map_y,
@@ -62,13 +79,21 @@ def sample_neighbour():
     my_guid = request.args.get("sample_guid")
     my_distance = request.args.get('distance')
     my_quality = request.args.get('quality')
-    neighbours = get_neighbours(my_guid, my_distance, my_quality)
+    print(my_guid)
+    if my_distance and my_quality:
+        neighbours = get_neighbours(my_guid, my_distance, my_quality)
+    else:
+        neighbours = list()
 
-    # req_neighbours = requests.get(...)
+    logging.warning(neighbours)
+    coordinate_query = ",".join([neighbour[1] for neighbour in neighbours])
+    data = call_api('map', '/coordinates2/{0}'.format(coordinate_query))
+    logging.warning(data)
 
     return render_template('neighbour.template',
-        sample_id = my_guid,
+        sample_guid = my_guid,
+        sample_name = "asdf",
         neighbours = neighbours
     )
 
-myapp.run(debug=True)
+myapp.run()

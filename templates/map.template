@@ -7,11 +7,11 @@
 <form action="/Samples/Map" method="post">    
   <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
   <h6>Sample Name: <strong><span id="name">{{ sample_name }}</span></strong></h6>
-  <h6>Sample Id: <span id="guid">{{ sample_id }}</span></h6>
+  <h6>Sample Id: <span id="guid">{{ sample_guid }}</span></h6>
   <input type="text" class="form-input hidden" name="id" id="sample_name" value={{ sample_name }} />
 </form>
 <div class="pull-right">
-  <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_id }}">Genetic Related</a>
+  <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
 </div>
 
 <h6>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></h6>
@@ -80,7 +80,7 @@
   </div>
   <div class="col-md-7">
     <div id="mapid"></div>
-    <p class="hidden"><span id="guid" >{{ sample_id }}</span><span id="name">{{ sample_name }}</span></p>
+    <p class="hidden"><span id="guid" >{{ sample_guid }}</span><span id="name">{{ sample_name }}</span></p>
   </div>
 </div>
 
