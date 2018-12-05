@@ -31,7 +31,7 @@ input{
     background-color: indigo;
 }
 
-textarea {
+textarea, table {
     max-width: 1000px;
     font-size:12px;
 }

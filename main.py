@@ -90,6 +90,17 @@ def sample_neighbour():
     neighbours_dict = dict()
     tbl = list()
 
+    guid_name_map = call_api('tree', '/lookup/{0}'.format(my_guid))
+    logger.debug('map: {0}'.format(guid_name_map))
+    sample_name = guid_name_map[0][1]
+    data = call_api('map', '/coordinates2/{0}'.format(sample_name))[0]
+    logger.debug('data: {0}'.format(data))
+
+    map_x = data[2]
+    map_y = data[3]
+    herd_id = data[4]
+    eartag = data[7]
+
     if my_distance and my_quality:
         # [neighbour, distance]
         query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
@@ -112,13 +123,15 @@ def sample_neighbour():
         neighbour_names = [x[1] for x in neighbour_guids_names]
         neighbour_names = ",".join(neighbour_names)
         tbl = call_api('map', '/coordinates2/{0}'.format(neighbour_names))
-        # ['AF-12-00479-18', '', '323500', '330400', '56087027501', '2018-02-12 00:00:00.000', '18', 'UK701676503454']
-        # logger.debug(tbl)
 
     # do coordinate lookup on names
     return render_template('neighbour.template',
+                           map_x = map_x,
+                           map_y = map_y,
+                           eartag = eartag,
+                           herd_id = herd_id,
                            sample_guid = my_guid,
-                           sample_name = "asdf",
+                           sample_name = sample_name,
                            neighbours = tbl,
                            neighbours_dict = neighbours_dict
     )

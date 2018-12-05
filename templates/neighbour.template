@@ -45,47 +45,57 @@
     </div>
     
     <div class="row">
-      {% if neighbours|length == 0 %}
       <div id="table_col" class="col-md-5">
+      {% if neighbours|length == 0 %}
         <h4>Please set ACGT% and SNP distance to search genetic related samples.</h4>
-      </div>
       {% endif %}
-      <div id="map_col" class="col-md-7">
-        <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Hide Table</p>
-        <div id="mapid"></div>
-        <p >
-          <span id="guid">{{ sample_guid }}</span>
-          <span id="name">{{ sample_name }}</span>
-        </p>
-      </div>
-    </div>
-    {% if neighbours %}
-    <h4 id="sample_guid_result"> {{ sample_guid }} <strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
-    <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
-    <table class="table table-striped tablesorter" id="sample_table">
-      <thead>
-        <tr>
-          <th><a href="#">#</a></th>
-          <th><a href="#">Herd </a></th>
-          <th><a href="#">Name</a></th>
-          <th><a href="#">Map </a></th>
-          <th><a href="#">Distance</a></th>
-          <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for neighbour in neighbours %}
-	<tr>
-	  <td>{{ loop.index }}</td>
-	  <td>{{ neighbour[4] }}</td>
-	  <td>{{ neighbour[0] }}</td>
-	  <td>{{ neighbour[2]  }}<br> {{ neighbour[3] }}</td>
-	  <td>{{ neighbours_dict[neighbour[0]] }}</td>
-	</tr>
+      {% if neighbours %}
+        <h4 id="sample_guid_result"> {{ sample_guid }} <strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
+          <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
+          <table class="table table-striped tablesorter" id="sample_table">
+          <thead>
+            <tr>
+              <th><a href="#">#</a></th>
+              <th><a href="#">Herd </a></th>
+              <th><a href="#">Name</a>
+              </th>
+              <th><a href="#">Map </a></th>
+              <th><a href="#">Distance</a></th>
+              <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for neighbour in neighbours %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ neighbour[4] }}</td>
+            <td id='name_{{ neighbour[0] }}'>{{ neighbour[0] }}</td>
+            <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div> <br> <div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
+            <td>{{ neighbours_dict[neighbour[0]] }}</td>
+            <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
     {% endif %}
-
+      </div>
+      <div id="map_col" class="col-md-7">
+        <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Hide Table</p>
+        <div id="mapid"></div>
+        <p class="hidden" >
+          <span id="guid" >{{ sample_guid }}</span>
+          <span id="name">{{ sample_name }}</span>
+        </p>
+      </div>
+    </div>
     {% endblock content %}
+
+    {% block scripts %}
+      <script src="/static/scripts/app/geotools.js"></script>
+      <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
+      <script src="/static/scripts/app/map.js"></script>
+      <script src="/static/scripts/app/neighbour.js"></script>
+      <script src="/static/scripts/app/samples.js"></script>
+      <script src="/static/scripts/jquery.tablesorter.js"></script>
+{% endblock scripts %}
     
