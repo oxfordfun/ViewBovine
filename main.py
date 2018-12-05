@@ -25,7 +25,7 @@ def call_api(kind, path):
     if kind == 'map':
         host = 'http://192.168.7.30:5006'
 
-    logger.debug('=> {0}{1}'.format(host, path))
+    logger.debug('=> {0}{1}'.format(host, path)[:80])
 
     try:
         req_api = requests.get(host + path)
@@ -34,11 +34,7 @@ def call_api(kind, path):
 
     logger.debug('<= {0}'.format(req_api.text)[:80])
 
-    return req_api.text
-
-def get_neighbours(guid, distance=6, quality="0.8"):
-    ret = call_api('tree', '/neighbours2/{0}?distance={1}&quality={2}&reference=R00000039'.format(guid, distance, quality))
-    return ret
+    return req_api.json()
 
 @myapp.route('/')
 def home():
@@ -92,28 +88,39 @@ def sample_neighbour():
     my_quality = request.args.get('quality')
     if my_distance and my_quality:
         # [neighbour, distance]
-        neighbours = get_neighbours(my_guid, my_distance, my_quality)
+        query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
+        neighbours = call_api('tree', query_fmt.format(my_guid, my_distance, my_quality))
 
         # get sample names
         neighbour_guids = [x[0] for x in neighbours]
         neighbour_guids = ",".join(neighbour_guids)
-        call_api('tree', '/lookup/{0}'.format(neighbour_guids))
+        neighbour_guids_names = call_api('tree', '/lookup/{0}'.format(neighbour_guids))
 
+        # build dict name -> distance
+        neighbours_dict = {}
+        for guid,name in neighbour_guids_names:
+            for guid2,distance in neighbours:
+                if guid == guid2:
+                    neighbours_dict[name] = distance
+                    break
+        logger.debug('neighbours_dict: {0}'.format(neighbours_dict))
+
+        # get table
+        neighbour_names = [x[1] for x in neighbour_guids_names]
+        neighbour_names = ",".join(neighbour_names)
+        tbl = call_api('map', '/coordinates2/{0}'.format(neighbour_names))
+        # ['AF-12-00479-18', '', '323500', '330400', '56087027501', '2018-02-12 00:00:00.000', '18', 'UK701676503454']
+        # logger.debug(tbl)
 
     else:
-        neighbours = list()
-
-    
+        tbl = list()
 
     # do coordinate lookup on names
-
-
-    data = call_api('map', '/coordinates2/{0}'.format(coordinate_query))
-
     return render_template('neighbour.template',
                            sample_guid = my_guid,
                            sample_name = "asdf",
-                           neighbours = neighbours
+                           neighbours = tbl,
+                           neighbours_dict = neighbours_dict
     )
 
 @myapp.route('/herd')
