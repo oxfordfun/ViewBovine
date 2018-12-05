@@ -116,4 +116,20 @@ def sample_neighbour():
                            neighbours = neighbours
     )
 
+@myapp.route('/herd')
+def herd():
+    return render_template('herd.template')
+
+@myapp.route('/cluster')
+def cluster():
+    return render_template('cluster.template')
+
+@myapp.route('/subcluster')
+def subcluster():
+    return render_template('subcluster.template')
+
+@myapp.route('/about')
+def about():
+    return render_template('about.template')
+
 myapp.run()

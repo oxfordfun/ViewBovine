@@ -1,0 +1,16 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<div class="container body-content">     
+<h2>Cluster Exploration</h2>
+<p>Set a SNP distance, and a subcluster Distance, search clusters and select one or more clusters to show on the map.</p>
+<form action="/subcluster" data-ajax="true" id="form0" method="post">    <div class="row">
+        <span class="col-md-2">Sample Name</span>
+        <span><input class="form-input col-md-3" id="SampleName" name="SampleName" oninvalid="this.setCustomValidity(&#39;Please input a Sample Name&#39;)" required="required" type="text" value="" /></span>
+        <span><input class="form-input col-md-1" data-val="true" data-val-number="The field ClusterDistance must be a number." data-val-required="The ClusterDistance field is required." id="cluster" max="20" min="0" name="ClusterDistance" onclick="Validateclusterdistance()" onkeyup="Validateclusterdistance()" size="2" type="number" value="20" /></span>
+        <span><input class="form-input col-md-1" data-val="true" data-val-number="The field SubClusterDistance must be a number." data-val-required="The SubClusterDistance field is required." id="subcluster" max="20" min="0" name="SubClusterDistance" onclick="Validateclusterdistance()" onkeyup="Validateclusterdistance()" size="2" type="number" value="20" /></span>
+        <span class="col-md-3"><input type="submit" value="Search Clusters" id="subcluster_submit" class="btn btn-danger" /></span>
+    </div>
+</form>
+{% endblock content %}
