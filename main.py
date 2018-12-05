@@ -14,6 +14,10 @@ def home():
 def sample():
     return render_template('sample.template')
 
+def get_neighbours(guid, distance=6, quality=80):
+    r = requests.get('http://192.168.7.30:5006/neighbours/{0}?reference=R0000039&distance={1}&quality=0.{2}'.format(guid, distance, quality))
+    return r.json()
+
 @myapp.route('/sample/map/')
 def sample_map():
     sample_name = request.args.get("sample_name")
@@ -35,6 +39,7 @@ def sample_map():
     sample_name = data[0]
     map_x = data[2]
     map_y = data[3]
+    herd_id = data[4]
     eartag = data[7]
 
     req_movement = requests.get('http://192.168.7.30:5006/api/locations/{0}'.format(sample_name))
@@ -47,19 +52,23 @@ def sample_map():
         eartag = eartag,
         map_x = map_x,
         map_y = map_y,
-        herd_id = 'asdf',
-        other_guids=other_guids,
-        movement_data=movement_data
+        herd_id = herd_id,
+        other_guids = other_guids,
+        movement_data = movement_data
         )
 
 @myapp.route('/sample/neighbour/')
 def sample_neighbour():
-    sample_guid = request.args.get("sample_guid")
+    my_guid = request.args.get("sample_guid")
+    my_distance = request.args.get('distance')
+    my_quality = request.args.get('quality')
+    neighbours = get_neighbours(my_guid, my_distance, my_quality)
 
     # req_neighbours = requests.get(...)
 
     return render_template('neighbour.template',
-        sample_guid = sample_guid
+        sample_id = my_guid,
+        neighbours = neighbours
     )
 
 myapp.run(debug=True)
