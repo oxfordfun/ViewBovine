@@ -1,10 +1,10 @@
 # ViewBovine
 bTB Whole Genome Sequencing Application
 
-![Cover of ViewBovine](https://github.com/aphascience/bTBWGS/raw/master/cover.png)
+![Cover of ViewBovine](https://github.com/misssoft/Fan.Flask/raw/master/cover.png)
 
 # Prerequisites
-    apt install flask logging requests json
+    apt install python3-flask python3-requests
 
 # Install and Run
     git clone https://github.com/aphascience/bTBWGS.git
