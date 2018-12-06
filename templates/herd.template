@@ -3,40 +3,58 @@
 {% block content %}
 
 <div class="container body-content">
-    <h2>Herd Sample Genetic Matrix</h2>
-    <form action="/herd" data-ajax="true" id="form_herd" method="get">    
+  <h2>Herd Sample Genetic Matrix</h2>
+  <form action="/herd" data-ajax="true" id="form_herd" method="get">    
     <div class="row">
-        <span class="col-md-6">Search a herd (via cphh [<strong>C</strong>]ounty [<strong>P</strong>]arish [<strong>H</strong>]olding [<strong>H</strong>]erd number, e.g. 06071000301)</span>
-        <span><input size=9 class="form-input col-md-4", name="id" value=></span>
-        <span class="col-md-3"><input type="submit" value="Search Herds" id="search_submit" class="btn btn-danger" /></span>
+      <span class="col-md-6">Search a herd (via cphh [<strong>C</strong>]ounty [<strong>P</strong>]arish [<strong>H</strong>]olding [<strong>H</strong>]erd number, e.g. 06071000301)</span>
+      <span><input size=9 class="form-input col-md-4", name="herd_id" value=></span>
+      <span class="col-md-3"><input type="submit" value="Search Herds" id="search_submit" class="btn btn-danger" /></span>
     </div>
-    </form>
-    <hr />
-    <div class="row">
-        <div class="container">
-        <h4>Single Nucleotide Polymorphism (SNP) Distance Matrix</h4>
+  </form>
+  <hr />
+  <div class="row">
+    <div class="container">
+      <h4>Single Nucleotide Polymorphism (SNP) Distance Matrix</h4>
 
-        <h6>Found herd: <strong>06071000301</strong>. There are <strong>2</strong> samples in the herd.</h6>
-        <hr />
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col" style="width:120px"></th>
-                        <th style="text-align:center; vertical-align: middle;">AF-12-00009-18</th>
-                        <th style="text-align:center; vertical-align: middle;">AF-12-00008-18</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for row in herd_matrix %}
-                <tr>
-                {% for sample in herd_matrix %}
-                    <td>{{ sample[]}}
-            {% endfor %}
-            </tbody>
-        </table>
+      <h6>Found herd: <strong>06071000301</strong>. There are <strong>2</strong> samples in the herd.</h6>
+      <hr />
+      <table class="table table-bordered">
+        <tbody>
+	  {% for i in range(n + 1) %}
+	  <tr>
+	    {% for j in range(n + 1) %}
+	    {% if i == 0 and j == 0 %}
+  	    <td></td>
+	    {% endif %}
+	    {% if i == 0 and j != 0 %}
+	    <td><!--col i={{ i }} j={{ j }}-->{{ herd_matrix[i + n * (j - 1)][0] }}</td>
+	    {% endif %}
+	    {% if j == 0 and i != 0 %}
+	    <td><!--row i={{ i }} j={{ j }} -->{{ herd_matrix[(i - 1) + n * j][1] }}</td>
+	    {% endif %}
+
+	    {% if i >= 1 and j >= 1 %}
+	    {% if i == j %}
+	    <td style="background-color: black"></td>
+	    {% else %}
+	    {% set distance = herd_matrix[(i - 1) + n * (j - 1)][2] %}
+	    {% if distance == -1 %}
+	    <td></td>
+	    {% else %}
+	    <td><!--i={{ i }} j={{ j }} -->{{ distance }}</td>
+	    {% endif %}
+	    {% endif %}
+	    {% endif %}
+	      
+	    {% endfor %}
+	  </tr>
+ 	  {% endfor %}
+	</tbody>
+      </table>
 
     </div>
 
+  </div>
 </div>
 
 {% endblock content %}
