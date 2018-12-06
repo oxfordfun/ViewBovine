@@ -19,22 +19,25 @@ def setup_logging():
 setup_logging()
 logger = logging.getLogger("fan_logger")
     
-def call_api(kind, path):
+def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
         host = 'http://192.168.7.30:5008'
     if kind == 'map':
         host = 'http://192.168.7.30:5006'
 
-    logger.debug('=> {0}{1}'.format(host, path)[:80])
+    logger.debug('{0} => {1}{2}'.format(kind, host, path)[:limit])
 
     try:
         req_api = requests.get(host + path)
     except Exception as e:
         abort(500, description=e)
 
-    logger.debug('<= {0}'.format(req_api.text)[:80])
+    logger.debug('{0} <= {1}'.format(kind, req_api.text)[:limit])
 
-    return req_api.json()
+    if return_type == 'json':
+        return req_api.json()
+    else:
+        return req_api.text
 
 @myapp.route('/')
 def home():
@@ -89,12 +92,12 @@ def sample_neighbour():
 
     neighbours_dict = dict()
     tbl = list()
+    cohab = dict()
+    cohab_figures = dict()
 
     guid_name_map = call_api('tree', '/lookup/{0}'.format(my_guid))
-    logger.debug('map: {0}'.format(guid_name_map))
     sample_name = guid_name_map[0][1]
     data = call_api('map', '/coordinates2/{0}'.format(sample_name))[0]
-    logger.debug('data: {0}'.format(data))
 
     map_x = data[2]
     map_y = data[3]
@@ -102,6 +105,14 @@ def sample_neighbour():
     eartag = data[7]
 
     if my_distance and my_quality:
+        cohab = call_api('map', '/api/locations_cohabit_filter/{0}/{1}'.format(sample_name, my_distance), limit=2000)['data']
+        logger.debug(len(cohab))
+        for k in cohab:
+            logger.debug(k)
+            cohab_figures[k] = call_api('map', '/api/locations_cohabit_filter_figure/{0}/{1}/{2}'.format(
+                sample_name, my_distance, k), return_type='text', limit=2000)
+        logger.debug(cohab_figures)
+
         # [neighbour, distance]
         query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
         neighbours = call_api('tree', query_fmt.format(my_guid, my_distance, my_quality))
@@ -117,7 +128,6 @@ def sample_neighbour():
                 if guid == guid2:
                     neighbours_dict[name] = distance
                     break
-        logger.debug('neighbours_dict: {0}'.format(neighbours_dict))
 
         # get table
         neighbour_names = [x[1] for x in neighbour_guids_names]
@@ -133,7 +143,9 @@ def sample_neighbour():
                            sample_guid = my_guid,
                            sample_name = sample_name,
                            neighbours = tbl,
-                           neighbours_dict = neighbours_dict
+                           neighbours_dict = neighbours_dict,
+                           cohab = cohab,
+                           cohab_figures = cohab_figures
     )
 
 @myapp.route('/herd')
