@@ -138,8 +138,11 @@ def sample_neighbour():
 
 @myapp.route('/herd')
 def herd():
-    import herd
-    return herd.herd()
+    herd_id = request.args.get('herd_id')
+    herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
+    import math
+    n = math.sqrt(len(herd_matrix))
+    return render_template('herd.template', herd_matrix=herd_matrix, n=int(n))
 
 @myapp.route('/cluster')
 def cluster():
