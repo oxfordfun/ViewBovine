@@ -48,19 +48,11 @@
       <div id="table_col" class="col-md-5">
 	{% if neighbours|length == 0 %}
         <h4>Please set ACGT% and SNP distance to search genetic related samples.</h4>
-<<<<<<< HEAD
       {% endif %}
       {% if neighbours %}
         <h4 id="sample_guid_result"><strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
           <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
           <table class="table table-striped tablesorter" id="sample_table">
-=======
-	{% endif %}
-	{% if neighbours %}
-        <h4 id="sample_guid_result"> {{ sample_guid }} <strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
-        <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
-        <table class="table table-striped tablesorter" id="sample_table">
->>>>>>> 08ff35cc1c6c75193ea1e785fb4f5cbf0352cc0c
           <thead>
             <tr>
               <th><a href="#">#</a></th>
@@ -132,20 +124,10 @@
     {% endblock content %}
 
     {% block scripts %}
-<<<<<<< HEAD
       <script src="/static/scripts/app/samples.js"></script>
       <script src="/static/scripts/app/neighbour.js"></script>
       <script src="/static/scripts/app/geotools.js"></script>
       <script src="/static/scripts/app/map.js"></script>
       <script src="/static/scripts/jquery.tablesorter.js"></script>
 {% endblock scripts %}
-=======
-    <script src="/static/scripts/app/geotools.js"></script>
-    <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
-    <script src="/static/scripts/app/map.js"></script>
-    <script src="/static/scripts/app/neighbour.js"></script>
-    <script src="/static/scripts/app/samples.js"></script>
-    <script src="/static/scripts/jquery.tablesorter.js"></script>
-    {% endblock scripts %}
->>>>>>> 08ff35cc1c6c75193ea1e785fb4f5cbf0352cc0c
     
