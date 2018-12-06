@@ -81,7 +81,8 @@ def sample_map():
                            map_y = map_y,
                            herd_id = herd_id,
                            other_guids = other_guids,
-                           movement_data = movement_data
+                           movement_data = movement_data,
+                           title = 'Sample and Herd'
     )
 
 @myapp.route('/sample/neighbour/')
@@ -145,7 +146,8 @@ def sample_neighbour():
                            neighbours = tbl,
                            neighbours_dict = neighbours_dict,
                            cohab = cohab,
-                           cohab_figures = cohab_figures
+                           cohab_figures = cohab_figures,
+                           title = 'Genetic Related Samples'
     )
 
 @myapp.route('/herd')
