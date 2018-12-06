@@ -4,11 +4,11 @@
 
 <h2>Sample and Herd</h2>
 
-<form action="/Samples/Map" method="post">    
+<form action="/sample/map" method="get">    
   <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
   <h6>Sample Name: <strong><span id="name">{{ sample_name }}</span></strong></h6>
   <h6>Sample Id: <span id="guid">{{ sample_guid }}</span></h6>
-  <input type="text" class="form-input hidden" name="id" id="sample_name" value={{ sample_name }} />
+  <input type="text" class="form-input hidden" name="sample_name" id="sample_name" value={{ sample_name }} />
 </form>
 <div class="pull-right">
   <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
