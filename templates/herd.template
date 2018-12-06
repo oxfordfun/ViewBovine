@@ -15,7 +15,28 @@
     <div class="row">
         <div class="container">
         <h4>Single Nucleotide Polymorphism (SNP) Distance Matrix</h4>
+
+        <h6>Found herd: <strong>06071000301</strong>. There are <strong>2</strong> samples in the herd.</h6>
+        <hr />
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width:120px"></th>
+                        <th style="text-align:center; vertical-align: middle;">AF-12-00009-18</th>
+                        <th style="text-align:center; vertical-align: middle;">AF-12-00008-18</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in herd_matrix %}
+                <tr>
+                {% for sample in herd_matrix %}
+                    <td>{{ sample[]}}
+            {% endfor %}
+            </tbody>
+        </table>
+
     </div>
+
 </div>
 
 {% endblock content %}

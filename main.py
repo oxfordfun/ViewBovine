@@ -138,7 +138,8 @@ def sample_neighbour():
 
 @myapp.route('/herd')
 def herd():
-    return render_template('herd.template')
+    import herd
+    return herd.herd()
 
 @myapp.route('/cluster')
 def cluster():
