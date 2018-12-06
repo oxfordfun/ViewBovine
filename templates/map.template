@@ -32,10 +32,10 @@
     {% if other_guids|length >= 1 %}
     <h4>Other matching results:</h4>
     {% for guid in other_guids %}
-    <form action="/Samples/Map" method="post">
+    <form action="/sample/map" method="get">
       <div>{{ sample_name }}
-	<input type="text", class="form-input hidden alert-link" name="id" id="sample_guid" value={{ guid }} />
-	<input type="submit" value={{ guid }} id="search_submit" class="btn-link" />
+	      <input type="text", class="form-input hidden alert-link" name="sample_name" id="sample_guid" value={{ guid }} />
+	      <input type="submit" value={{ guid }} id="search_submit" class="btn-link" />
       </div>
     </form>
     {% endfor %}
