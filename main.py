@@ -142,7 +142,7 @@ def herd():
     herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
     import math
     n = math.sqrt(len(herd_matrix))
-    return render_template('herd.template', herd_matrix=herd_matrix, n=int(n))
+    return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
 
 @myapp.route('/cluster')
 def cluster():

@@ -15,8 +15,8 @@
 </div>
 
 <h6>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></h6>
-<form action="/Herd" method="post">    <h6>
-    Herd: <input type="text", class="form-input hidden alert-link" name="id" id="herd_id" value={{ herd_id }} />
+<form action="/herd" method="get">    <h6>
+    Herd: <input type="text", class="form-input hidden alert-link" name="herd_id" id="herd_id" value={{ herd_id }} />
     <input type="submit" value={{ herd_id }} id="herd_search" class="btn-link" />
   </h6>
 </form>
