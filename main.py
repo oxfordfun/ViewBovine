@@ -64,12 +64,14 @@ def sample_map():
     req_lookup = requests.get('http://192.168.7.30:5008/lookup/{0}'.format(sample_name))
     names_guids = json.loads(req_lookup.text)
 
-    my_guid = names_guids[0][0]
-    sample_name = names_guids[0][1]
+    my_guid = "Not found"
     other_guids = list()
-    for guid,_ in names_guids[1:]:
-        other_guids.append(guid)
 
+    if names_guids:
+        my_guid = names_guids[0][0]
+        sample_name = names_guids[0][1]
+        for guid,_ in names_guids[1:]:
+            other_guids.append(guid)
 
     req_coord = requests.get('http://192.168.7.30:5006/coordinates2/{0}'.format(sample_name))
     data = json.loads(req_coord.text)[0]
