@@ -27,10 +27,10 @@
   	    <td></td>
 	    {% endif %}
 	    {% if i == 0 and j != 0 %}
-	    <td><!--col i={{ i }} j={{ j }}-->{{ herd_matrix[i + n * (j - 1)][0] }}</td>
+	    <td><span style="white-space: nowrap; writing-mode: vertical-rl; text-orientation: mixed"><!--col i={{ i }} j={{ j }}-->{{ herd_matrix[i + n * (j - 1)][0] }}</span></td>
 	    {% endif %}
 	    {% if j == 0 and i != 0 %}
-	    <td><!--row i={{ i }} j={{ j }} -->{{ herd_matrix[(i - 1) + n * j][1] }}</td>
+	    <td><span style="white-space: nowrap;"><!--row i={{ i }} j={{ j }} -->{{ herd_matrix[(i - 1) + n * j][1] }}</span></td>
 	    {% endif %}
 
 	    {% if i >= 1 and j >= 1 %}
