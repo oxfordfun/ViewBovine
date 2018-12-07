@@ -42,7 +42,7 @@
 	    {% if distance == -1 %}
 	    <td></td>
 	    {% else %}
-	    <td><!--i={{ i }} j={{ j }} -->{{ distance }}</td>
+	    <td style="text-align:center; vertical-align: middle;"><!--i={{ i }} j={{ j }} -->{{ distance }}</td>
 	    {% endif %}
 	    {% endif %}
 	    {% endif %}
