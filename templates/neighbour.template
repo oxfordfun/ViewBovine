@@ -22,8 +22,8 @@
     <h4>Please set ACGT% and SNP distance to search genetic related samples.</h4>
   {% endif %}
   {% if neighbours %}
-    <h4 id="sample_guid_result"><strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>HERD COUNT</strong> herd.</h4>
-    <h5>HERD COUNT SAME neighbour(s) are in the same herd.</h5>
+    <h4 id="sample_guid_result"><strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>{{ num_herds }}</strong> herd.</h4>
+    <h5>{{ same_herd_samples }} neighbour(s) are in the same herd.</h5>
     <table class="table table-striped tablesorter" id="sample_table">
     <thead>
     <tr>

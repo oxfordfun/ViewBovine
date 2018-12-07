@@ -134,6 +134,20 @@ def sample_neighbour():
         neighbour_names = [x[1] for x in neighbour_guids_names]
         neighbour_names = ",".join(neighbour_names)
         tbl = call_api('map', '/coordinates2/{0}'.format(neighbour_names))
+        # unique by sample name
+        tbl = list({ row[0]:row for row in tbl }.values())
+
+        # number of unique herds
+        num_herds = 0
+        # number of members of the herd with the parent sample name
+        same_herd_samples = 0
+        seen_herds = list()
+        for row in tbl:
+            if row[4] not in seen_herds:
+                num_herds = num_herds + 1
+                seen_herds.append(row[4])
+            if row[4] == herd_id:
+                same_herd_samples = same_herd_samples + 1
 
     # do coordinate lookup on names
     return render_template('neighbour.template',
@@ -147,7 +161,9 @@ def sample_neighbour():
                            neighbours_dict = neighbours_dict,
                            cohab = cohab,
                            cohab_figures = cohab_figures,
-                           title = 'Genetic Related Samples'
+                           title = 'Genetic Related Samples',
+                           num_herds = num_herds,
+                           same_herd_samples = same_herd_samples
     )
 
 @myapp.route('/herd')
