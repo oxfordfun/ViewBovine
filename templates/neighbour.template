@@ -4,56 +4,58 @@
 <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Toggle Map</p>
 <form action="/sample/neighbour" data-ajax="true" id="form0" method="get">
   <div class="row">
-    <input class="form-input hidden" data-val="true" id="SampleId" 
-     name="sample_guid" size="5" type="text" value="{{ sample_guid }}" />
+    <input class="form-input hidden" data-val="true" id="SampleId"
+	   name="sample_guid" size="5" type="text" value="{{ sample_guid }}" />
     <span class="col-md-2">AGCT % (eg. 80)</span><span> <input class="form-input col-md-1" data-val="true"
-			data-val-number="The field Quality must be a number." data-val-required="The Quality field is required."
-  		id="Quality" max="90" min="60" name="quality" size="2" type="number" value="80" /></span>
+							       data-val-number="The field Quality must be a number." data-val-required="The Quality field is required."
+							       id="Quality" max="90" min="60" name="quality" size="2" type="number" value="80" /></span>
     <span class="col-md-2">SNP Distance (eg. 6)</span><span> <input class="form-input col-md-1" data-val="true"
-			data-val-number="The field Distance must be a number." data-val-required="The Distance field is required."
-			id="Distance" max="50" min="0" name="distance" size="5" type="number" value="6" /></span>
-     <span class="col-md-2"><input type="submit" value="Search Genetic Related Samples" id="search_submit" class="btn btn-primary" /></span>
-  </div> 
+								    data-val-number="The field Distance must be a number." data-val-required="The Distance field is required."
+								    id="Distance" max="50" min="0" name="distance" size="5" type="number" value="6" /></span>
+    <span class="col-md-2"><input type="submit" value="Search Genetic Related Samples" id="search_submit" class="btn btn-primary" /></span>
+  </div>
 </form>
 <br />
 <div class="row">
   <div id="table_col" class="col-md-5">
-	{% if neighbours|length == 0 %}
+    {% if neighbours|length == 0 %}
     <h4>Please set ACGT% and SNP distance to search genetic related samples.</h4>
-  {% endif %}
-  {% if neighbours %}
+    {% endif %}
+    {% if neighbours %}
     <h4 id="sample_guid_result"><strong> {{ neighbours|length }} </strong> neighbour(s) found, in <strong>{{ num_herds }}</strong> herd.</h4>
     <h5>{{ same_herd_samples }} neighbour(s) are in the same herd.</h5>
     <table class="table table-striped tablesorter" id="sample_table">
-    <thead>
-    <tr>
-      <th><a href="#">#</a></th>
-      <th>Herd</th>
-      <th>Name></th>
-      <th><a href="#">Map </a></th>
-      <th><a href="#">Distance</a></th>
-      <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for neighbour in neighbours %}
-    <tr>
-      <td>{{ loop.index }}</td>
-      <td><form action="/herd" >
-        <input type="text" , class="form-input hidden alert-link" name="herd_id" id="herd_id" value="{{ neighbour[4] }}" />
-        <input type="submit" value="{{ neighbour[4] }}" id="herd_search" class="btn-link" /></form></td>
-      <td><form action="/sample/map">                            
-        <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ neighbour[0] }}" />
-        <input type="submit" value="{{ neighbour[0] }}" id="sample_search" class="btn-link" />
-        <span id='name_{{ neighbour[0] }}' class="hidden">{{ neighbour[0] }}</span></form></td>
-      <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div> <br> <div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
-      <td><span id="distance_{{ neighbour[0] }}">{{ neighbours_dict[neighbour[0]] }}</span></td>
-      <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
-    </tr>
-    {% endfor %}
-	  </tbody>
-	  </table>
-	{% endif %}
+      <thead>
+	<tr>
+	  <th><a href="#">#</a></th>
+	  <th>Herd</th>
+	  <th>Name></th>
+	  <th><a href="#">Map </a></th>
+	  <th><a href="#">Distance</a></th>
+	  <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for neighbour in neighbours %}
+	<tr>
+	  <td>{{ loop.index }}</td>
+	  <td><form action="/herd" >
+	      <input type="text" , class="form-input hidden alert-link" name="herd_id" id="herd_id" value="{{ neighbour[4] }}" />
+	      <input type="submit" value="{{ neighbour[4] }}" id="herd_search" class="btn-link" /></form></td>
+	  <td><form action="/sample/map">
+	      <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ neighbour[0] }}" />
+	      <input type="submit" value="{{ neighbour[0] }}" id="sample_search" class="btn-link" />
+	      <span id='name_{{ neighbour[0] }}' class="hidden">{{ neighbour[0] }}</span></form></td>
+	  <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div> <br> <div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
+	  <td><span id="distance_{{ neighbour[0] }}">{{ neighbours_dict[neighbour[0]] }}</span></td>
+	  <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>Sample has no neighbours within parameters</p>
+    {% endif %}
   </div> <!--End of distance column (left)-->
   <div id="map_col" class="col-md-7">
     <div id="mapid"></div>
@@ -63,29 +65,28 @@
     </p>
     <h3>Co-habitation Record</h3>
     <hr />
-	  {% for k,vs in cohab.items() %}
+    {% for k,vs in cohab.items() %}
     <h4>{{ k }}</h4>
-     <a class="btn-link pull-right" id="show{{ k }}" onclick="Show_cohabit_detail(show{{ k }});">Show Detail</a>
-	  <div>{{ cohab_figures[k] }}</div>
+    <a class="btn-link pull-right" id="show{{ k }}" onclick="Show_cohabit_detail(show{{ k }});">Show Detail</a>
+    <div>{{ cohab_figures[k] }}</div>
     <div class="hidden" id="{{ k }}" style="background-color:#f9f9f9 ">
       {% for v in vs %}
-        <br />
-          {% for key,value in v.items() %}
-              <p style="margin-left:50px"><span>{{ key }}</span>:  <span><strong>{{ value }}</strong></span></p>
-	        {% endfor %}
-      {% endfor %}    
+      <br />
+      {% for key,value in v.items() %}
+      <p style="margin-left:50px"><span>{{ key }}</span>:  <span><strong>{{ value }}</strong></span></p>
+      {% endfor %}
+      {% endfor %}
     </div>
     {% endfor %}
-    </div><!--End of map/co-hab column (right)-->
-  </div><!--End of Row-->
+  </div><!--End of map/co-hab column (right)-->
+</div><!--End of Row-->
 {% endblock maincontent %}
 
 {% block scripts %}
-      <script src="/static/scripts/app/samples.js"></script>
-      <script src="/static/scripts/app/neighbour.js"></script>
-      <script src="/static/scripts/app/geotools.js"></script>
-      <script src="/static/scripts/app/map.js"></script>
-      <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
-      <script src="/static/scripts/jquery.tablesorter.js"></script>
+<script src="/static/scripts/app/samples.js"></script>
+<script src="/static/scripts/app/neighbour.js"></script>
+<script src="/static/scripts/app/geotools.js"></script>
+<script src="/static/scripts/app/map.js"></script>
+<script src="/static/scripts/leaflet.polylineDecorator.js"></script>
+<script src="/static/scripts/jquery.tablesorter.js"></script>
 {% endblock scripts %}
-    

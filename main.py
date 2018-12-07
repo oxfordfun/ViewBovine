@@ -18,12 +18,14 @@ def setup_logging():
 
 setup_logging()
 logger = logging.getLogger("fan_logger")
-    
+
 def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
         host = 'http://192.168.7.30:5008'
-    if kind == 'map':
+    elif kind == 'map':
         host = 'http://192.168.7.30:5006'
+    else:
+        abort(500, description="unknown api host: {0}".format(kind))
 
     logger.debug('{0} => {1}{2}'.format(kind, host, path)[:limit])
 
@@ -32,10 +34,18 @@ def call_api(kind, path, return_type='json', limit=80):
     except Exception as e:
         abort(500, description=e)
 
+    if req_api.status_code != 200:
+        abort(500, description="api call to {0} returned code {1}, content: {2}".format(host + path, req_api.status_code, req_api.text))
+
     logger.debug('{0} <= {1}'.format(kind, req_api.text)[:limit])
 
     if return_type == 'json':
-        return req_api.json()
+        try:
+            ret = req_api.json()
+            return ret
+        except Exception as e:
+            abort(500, description="couldn't parse api response to {0} as json: {1}".format(host + path, req_api.text))
+
     else:
         return req_api.text
 
@@ -73,7 +83,7 @@ def sample_map():
     req_movement = requests.get('http://192.168.7.30:5006/api/locations/{0}'.format(sample_name))
     movement_data = json.loads(req_movement.text)['data'][sample_name]
 
-    return render_template('map.template', 
+    return render_template('map.template',
                            sample_name = sample_name,
                            sample_guid = my_guid,
                            eartag = eartag,
@@ -95,6 +105,11 @@ def sample_neighbour():
     tbl = list()
     cohab = dict()
     cohab_figures = dict()
+
+    # number of unique herds
+    num_herds = 0
+    # number of members of the herd with the parent sample name
+    same_herd_samples = 0
 
     guid_name_map = call_api('tree', '/lookup/{0}'.format(my_guid))
     sample_name = guid_name_map[0][1]
@@ -119,35 +134,32 @@ def sample_neighbour():
         neighbours = call_api('tree', query_fmt.format(my_guid, my_distance, my_quality))
 
         # get sample names
-        neighbour_guids = [x[0] for x in neighbours]
-        neighbour_guids = ",".join(neighbour_guids)
-        neighbour_guids_names = call_api('tree', '/lookup/{0}'.format(neighbour_guids))
+        if neighbours:
+            neighbour_guids = [x[0] for x in neighbours]
+            neighbour_guids = ",".join(neighbour_guids)
+            neighbour_guids_names = call_api('tree', '/lookup/{0}'.format(neighbour_guids))
 
-        # build dict name -> distance
-        for guid,name in neighbour_guids_names:
-            for guid2,distance in neighbours:
-                if guid == guid2:
-                    neighbours_dict[name] = distance
-                    break
+            # build dict name -> distance
+            for guid,name in neighbour_guids_names:
+                for guid2,distance in neighbours:
+                    if guid == guid2:
+                        neighbours_dict[name] = distance
+                        break
 
-        # get table
-        neighbour_names = [x[1] for x in neighbour_guids_names]
-        neighbour_names = ",".join(neighbour_names)
-        tbl = call_api('map', '/coordinates2/{0}'.format(neighbour_names))
-        # unique by sample name
-        tbl = list({ row[0]:row for row in tbl }.values())
+            # get table
+            neighbour_names = [x[1] for x in neighbour_guids_names]
+            neighbour_names = ",".join(neighbour_names)
+            tbl = call_api('map', '/coordinates2/{0}'.format(neighbour_names))
+            # unique by sample name
+            tbl = list({ row[0]:row for row in tbl }.values())
 
-        # number of unique herds
-        num_herds = 0
-        # number of members of the herd with the parent sample name
-        same_herd_samples = 0
-        seen_herds = list()
-        for row in tbl:
-            if row[4] not in seen_herds:
-                num_herds = num_herds + 1
-                seen_herds.append(row[4])
-            if row[4] == herd_id:
-                same_herd_samples = same_herd_samples + 1
+            seen_herds = list()
+            for row in tbl:
+                if row[4] not in seen_herds:
+                    num_herds = num_herds + 1
+                    seen_herds.append(row[4])
+                if row[4] == herd_id:
+                    same_herd_samples = same_herd_samples + 1
 
     # do coordinate lookup on names
     return render_template('neighbour.template',
