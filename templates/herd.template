@@ -18,8 +18,8 @@
 
 			{% if herd_matrix|length != 1 %}
       <h6>Found herd: <strong>{{ herd_id }}</strong>. There are <strong>{{ n }}</strong> samples in the herd.</h6>
-      <hr />
-      <table class="table table-bordered">
+      <br/>
+      <table class="table table-bordered" style="width: auto !important">
         <tbody>
 	  {% for i in range(n + 1) %}
 	  <tr>
