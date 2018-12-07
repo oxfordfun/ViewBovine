@@ -10,6 +10,7 @@ function switch_view() {
     var map_col = document.getElementById("map_col");
     var table_col_5 = table_col.classList.contains("col-md-5");
     var map_col_7 = map_col.classList.contains("col-md-7");
+    var map_col_12 = map_col.classList.contains ("col-md-12");
     if (table_col !== undefined && map_col !== undefined) {
         if (table_col_5 && map_col_7) {
             table_col.classList.remove('col-md-5');
@@ -18,16 +19,14 @@ function switch_view() {
             map_col.classList.add('col-md-12');
             map_div.style.height = "1140px";
             map_div.style.width = "1140px";
-            view_toggle.innerHTML = "Show Table";
         }
-        else {
+        if (map_col_12) {
             table_col.classList.remove('hidden');
             table_col.classList.add('col-md-5');
             map_col.classList.remove('col-md-12');
             map_col.classList.add('col-md-7');
-            map_div.style.height = "570px";
-            map_div.style.width = "570px";
-            view_toggle.innerHTML = "Hide Table";
+            map_div.style.height = "500px";
+            map_div.style.width = "650px";
         }
     }
     mymap.invalidateSize();

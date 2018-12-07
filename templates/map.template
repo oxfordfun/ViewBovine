@@ -1,30 +1,6 @@
-{% extends "base.template" %}
+{% extends "navigation.template" %}
 
-{% block content %}
-
-<h2>Sample and Herd</h2>
-
-<form action="/sample/map" method="get">    
-  <input type="submit" value="Show all results" id="search_submit" class="btn-link pull-right" />
-  <h6>Sample Name: <strong><span id="name">{{ sample_name }}</span></strong></h6>
-  <h6>Sample Id: <span id="guid">{{ sample_guid }}</span></h6>
-  <input type="text" class="form-input hidden" name="sample_name" id="sample_name" value={{ sample_name }} />
-</form>
-<div class="pull-right">
-  <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
-</div>
-
-<h6>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></h6>
-<form action="/Herd" method="post">    <h6>
-    Herd: <input type="text", class="form-input hidden alert-link" name="id" id="herd_id" value={{ herd_id }} />
-    <input type="submit" value={{ herd_id }} id="herd_search" class="btn-link" />
-  </h6>
-</form>
-<h6>
-  Location: <span id="map_x">{{ map_x }},</span><span id="map_y"> {{ map_y }} </span>
-</h6>
-<hr />
-
+{% block maincontent %}
 <div class="row">
   <div class="col-md-5">
     <!-- Other Guids--> 
@@ -84,7 +60,7 @@
   </div>
 </div>
 
-{% endblock content %}
+{% endblock maincontent %}
 
 {% block scripts %}
 <script src="/static/scripts/app/geotools.js"></script>

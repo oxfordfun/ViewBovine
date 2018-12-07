@@ -1,0 +1,31 @@
+{% extends "base.template" %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+<form action="/sample/map" >                            
+  Sample: <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ sample_name }}" />
+  <input type="submit" value="{{ sample_name }}" id="sample_search" class="btn-link" />
+</form>
+<div class="pull-right">
+    <a class="btn-primary btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
+</div>
+
+<div>Ear Tag: <strong><span id="eartag">{{ eartag }}</span></strong></div>
+
+<div>
+  Location: <span id="map_x">{{ map_x }},</span><span id="map_y"> {{ map_y }} </span>
+</div>
+
+<div>Oxford Id: <span id="guid">{{ sample_guid }}</span></div>
+
+<form action="/herd" method="get">    
+  Herd: <input type="text", class="form-input hidden  alert-link" name="herd_id" id="herd_id" value={{ herd_id }} />
+  <input type="submit" value="{{ herd_id }}" id="herd_search" class="btn-link" />
+</form>
+
+<hr/>
+{% block maincontent %}
+{% endblock maincontent %}
+
+{% endblock content %}
+

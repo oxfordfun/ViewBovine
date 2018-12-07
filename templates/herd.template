@@ -7,7 +7,7 @@
   <form action="/herd" data-ajax="true" id="form_herd" method="get">    
     <div class="row">
       <span class="col-md-6">Search a herd (via cphh [<strong>C</strong>]ounty [<strong>P</strong>]arish [<strong>H</strong>]olding [<strong>H</strong>]erd number, e.g. 06071000301)</span>
-      <span><input size=9 class="form-input col-md-4", name="herd_id" value=></span>
+      <span><input size=9 class="form-input col-md-4", name="herd_id" value={{ herd_id }}></span>
       <span class="col-md-3"><input type="submit" value="Search Herds" id="search_submit" class="btn btn-danger" /></span>
     </div>
   </form>
@@ -16,7 +16,8 @@
     <div class="container">
       <h4>Single Nucleotide Polymorphism (SNP) Distance Matrix</h4>
 
-      <h6>Found herd: <strong>06071000301</strong>. There are <strong>2</strong> samples in the herd.</h6>
+			{% if herd_matrix|length != 1 %}
+      <h6>Found herd: <strong>{{ herd_id }}</strong>. There are <strong>{{ n }}</strong> samples in the herd.</h6>
       <hr />
       <table class="table table-bordered">
         <tbody>
@@ -35,7 +36,7 @@
 
 	    {% if i >= 1 and j >= 1 %}
 	    {% if i == j %}
-	    <td style="background-color: black"></td>
+	    <td style="background-color: #d3d3d3"></td>
 	    {% else %}
 	    {% set distance = herd_matrix[(i - 1) + n * (j - 1)][2] %}
 	    {% if distance == -1 %}
@@ -51,7 +52,8 @@
  	  {% endfor %}
 	</tbody>
       </table>
-
+		{% else %}
+		{% endif %}
     </div>
 
   </div>
