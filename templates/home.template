@@ -4,13 +4,18 @@
 
 <div class="jumbotron">
     <h1>ViewBovine</h1>
-    <p class="lead">ViewBovine is a Web Portal for exploring WGS data of M.bovis, including samples information, their genetic relatedness and insights about their evolution.</p>
+    <p class="lead">ViewBovine is a Web Portal for exploring WGS data of M.bovis, linking genetic relatedness with geographical neighbourhood for understanding bTB transmission.</p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Samples & Herd</h2>
-        <p>Examine the individual samples about their sequencing data, nearest neighbourhood genetically and geographically.</p>
+        <h2>Sample and Herd</h2>
+        <p>Examine the individual samples about their location, the related cattle movement and the genetical relatedness in the herd.</p>
+        <p><a class="btn btn-default btn-danger" href="/sample">Examine &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Neighbourhood</h2>
+        <p>Explore the sample neighbourhood, genetically and geographically. Has a cattle infected by staying with other cattle that is genetically related to bTB? </p>
         <p><a class="btn btn-default btn-danger" href="/sample">Examine &raquo;</a></p>
     </div>
     <div class="col-md-4">
@@ -18,10 +23,5 @@
         <p>Where are those samples genetically close? View the geographical distribution of the genetic clusters. Can the map view indicate some transmission? </p>
         <p><a class="btn btn-default btn-danger" href="/cluster">Discover &raquo </a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Phylogeny Trees</h2>
-        <p>Tree server powered by IQ-Tree has been set up to build maximum likelihood phylogenetic trees, view a list of built trees and the result. </p>
-        <p><a class="btn btn-default btn-danger" href="/arboreta">Manage &raquo </a></p>
-    </div>   
 </div>
 {% endblock content %}
