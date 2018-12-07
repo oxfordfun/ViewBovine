@@ -31,7 +31,7 @@
 	    <td><span style="white-space: nowrap; writing-mode: vertical-rl; text-orientation: mixed"><!--col i={{ i }} j={{ j }}-->{{ herd_matrix[i + n * (j - 1)][0] }}</span></td>
 	    {% endif %}
 	    {% if j == 0 and i != 0 %}
-	    <td><span style="white-space: nowrap;"><!--row i={{ i }} j={{ j }} -->{{ herd_matrix[(i - 1) + n * j][1] }}</span></td>
+	    <td><span style="white-space: nowrap;"><a href="/sample/map/?sample_name={{ herd_matrix[(i - 1) + n * j][1] }}"><!--row i={{ i }} j={{ j }} -->{{ herd_matrix[(i - 1) + n * j][1] }}</a></span></td>
 	    {% endif %}
 
 	    {% if i >= 1 and j >= 1 %}
