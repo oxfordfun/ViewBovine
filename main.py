@@ -184,10 +184,14 @@ def sample_neighbour():
 @myapp.route('/herd')
 def herd():
     herd_id = request.args.get('herd_id')
-    herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
-    import math
-    n = math.sqrt(len(herd_matrix))
-    return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
+    if herd_id != None:
+        herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
+        import math
+        n = math.sqrt(len(herd_matrix))
+        return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
+    else:
+        return render_template('herd.template', herd_id="", herd_matrix=[0], n=0)
+
 
 @myapp.route('/cluster')
 def cluster():
@@ -201,4 +205,5 @@ def subcluster():
 def about():
     return render_template('about.template')
 
-myapp.run()
+if __name__ == "__main__":
+    myapp.run()
