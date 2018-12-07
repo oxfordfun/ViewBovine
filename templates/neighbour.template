@@ -16,6 +16,9 @@
   </div>
 </form>
 <br />
+<div class='hidden'>
+    {% include 'movement.template' %}
+  </div>
 <div class="row">
   <div id="table_col" class="col-md-5">
     {% if neighbours|length == 0 %}
@@ -86,7 +89,7 @@
 <script src="/static/scripts/app/samples.js"></script>
 <script src="/static/scripts/app/neighbour.js"></script>
 <script src="/static/scripts/app/geotools.js"></script>
-<script src="/static/scripts/app/map.js"></script>
 <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
+<script src="/static/scripts/app/map.js"></script>
 <script src="/static/scripts/jquery.tablesorter.js"></script>
 {% endblock scripts %}

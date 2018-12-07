@@ -120,6 +120,8 @@ def sample_neighbour():
     herd_id = data[4]
     eartag = data[7]
 
+    movement_data = call_api('map', '/api/locations/{0}'.format(sample_name))['data'][sample_name]
+
     if my_distance and my_quality:
         cohab = call_api('map', '/api/locations_cohabit_filter/{0}/{1}'.format(sample_name, my_distance), limit=2000)['data']
         logger.debug(len(cohab))
@@ -175,7 +177,8 @@ def sample_neighbour():
                            cohab_figures = cohab_figures,
                            title = 'Genetic Related Samples',
                            num_herds = num_herds,
-                           same_herd_samples = same_herd_samples
+                           same_herd_samples = same_herd_samples,
+                           movement_data = movement_data
     )
 
 @myapp.route('/herd')

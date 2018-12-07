@@ -1,0 +1,29 @@
+<table class="table table-striped" id="move_table">
+      <thead>
+      <tr>
+        <th>Location</th>
+        <th>From </th>
+        <th>To </th>
+        <th>Stay</th>
+        <th><input type="checkbox" id="check_all_movements" onclick="check_all_movements();" /></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for move in movement_data %}
+      <tr>
+        <td>{{ move['LocationId'] }} <br/> {{ move['LocationName'] }}</td>
+        <td>{{ move['StartDate'] }}</td>
+        <td>{{ move['EndDate'] }}</td>
+        <td>{{ move['StayLength'] }}</td>
+        <td>
+          {% set map_x = move['X'] %}
+          {% set map_y = move['Y'] %}
+          {% set from = move['StartDate'] %}
+          {% set stay = move['StayLength'] %}
+          {% set map_x_y = map_x + '_' + map_y + '_' + from + '_' + stay %}
+          <input type="checkbox" class="move_tick" id={{ map_x_y }} />
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+</table>
