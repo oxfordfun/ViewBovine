@@ -69,7 +69,7 @@
     <h3>Co-habitation Record</h3>
     <hr />
     {% for k,vs in cohab.items() %}
-    <h4>{{ k }}</h4>
+    <h4>{{ k|replace('_', ' ') }}</h4>
     <a class="btn-link pull-right" id="show{{ k }}" onclick="Show_cohabit_detail(show{{ k }});">Show Detail</a>
     <div>{{ cohab_figures[k] }}</div>
     <div class="hidden" id="{{ k }}" style="background-color:#f9f9f9 ">
