@@ -192,10 +192,31 @@ def herd():
     else:
         return render_template('herd.template', herd_id="", herd_matrix=[0], n=0)
 
+import functools
+
+@functools.lru_cache(maxsize=None)
+def lookup(names):
+    return call_api('map', '/coordinates2/{0}'.format(names))
 
 @myapp.route('/cluster')
 def cluster():
-    return render_template('cluster.template')
+    cluster_snp = request.args.get('cluster_snp')
+    if cluster_snp is not None and int(cluster_snp)>=0 and int(cluster_snp)<=20:
+        clusters_list = call_api('map', '/clusters/{0}'.format(cluster_snp))
+
+        clusters = list()
+
+        for cluster in clusters_list:
+            names = ",".join(cluster)
+            tbl = lookup(names)
+
+            cluster_item = [[row[0], row[3], row[4]] for row in tbl]
+            clusters.append(cluster_item)
+
+
+        return render_template('cluster.template', clusters = clusters, cluster_snp=cluster_snp)
+    else:
+        return render_template('cluster.template')
 
 @myapp.route('/subcluster')
 def subcluster():
