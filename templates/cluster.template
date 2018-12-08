@@ -36,16 +36,16 @@
             <td id='no_{{ key_sample_name }}'>{{ loop.index }}</td>
             <td>{{ cluster|length }}</td>
             <td id='map_{{ key_sample_name }}'>
-            <!--
+            
                {% for sample_data in cluster %}
                {% set sample_name = sample_data[0] %}
                {% set sample_x = sample_data[1] %}
                {% set sample_y = sample_data[2] %}
-                    <div class="sample_in_cluster">{{ sample_name }} {{ sample_x }} {{ sample_y }}</div>
+                    <div class="sample_in_cluster">{{ sample_name }}, {{ sample_x }}, {{ sample_y }}</div>
                {% endfor %}
-            -->
+           
             </td>
-            <td><input type="checkbox" class="cluster_tick" id="@clustermap.Key" /></td>
+            <td><input type="checkbox" class="cluster_tick" id="{{ key_sample_name }}" /></td>
         </tr>
         {% endif %}
 

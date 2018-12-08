@@ -210,7 +210,7 @@ def cluster():
             names = ",".join(cluster)
             tbl = lookup(names)
 
-            cluster_item = [[row[0], row[3], row[4]] for row in tbl]
+            cluster_item = [[row[0], row[2], row[3]] for row in tbl]
             clusters.append(cluster_item)
 
 
