@@ -200,29 +200,42 @@ import functools
 def lookup(names):
     return call_api('map', '/coordinates2/{0}'.format(names))
 
+def get_cluster_data(clusters_list):
+    clusters = list()
+    sample_total = 0
+    for cluster in clusters_list:
+        sample_total = sample_total + len(cluster)
+        names = ",".join(cluster)
+        tbl = lookup(names)
+        cluster_item = [[row[0], row[2], row[3]] for row in tbl]
+        clusters.append(cluster_item)
+    return clusters, sample_total
+
 @myapp.route('/cluster')
 def cluster():
     cluster_snp = request.args.get('cluster_snp')
-    if cluster_snp is not None and int(cluster_snp)>=0 and int(cluster_snp)<=20:
+    if cluster_snp is not None and int(cluster_snp) >= 0 and int(cluster_snp) <= 20:
         clusters_list = call_api('map', '/clusters/{0}'.format(cluster_snp))
-
-        clusters = list()
-
-        for cluster in clusters_list:
-            names = ",".join(cluster)
-            tbl = lookup(names)
-
-            cluster_item = [[row[0], row[2], row[3]] for row in tbl]
-            clusters.append(cluster_item)
-
-
-        return render_template('cluster.template', clusters = clusters, cluster_snp=cluster_snp)
+        clusters, sample_total = get_cluster_data(clusters_list)
+        return render_template('cluster.template', clusters = clusters, cluster_snp=cluster_snp, sample_total=sample_total)
     else:
         return render_template('cluster.template')
 
 @myapp.route('/subcluster')
 def subcluster():
-    return render_template('subcluster.template')
+    sample_name = request.args.get('sample_name')
+    distance1 = request.args.get('distance1')
+    distance2 = request.args.get('distance2')
+    if sample_name and distance1 and distance2:
+        clusters_list = call_api('map', '/clusters2/{0}/{1}/{2}'.format(sample_name,distance1,distance2))
+        clusters, sample_total = get_cluster_data(clusters_list)
+        return render_template('subcluster.template', clusters = clusters,sample_total = sample_total, sample_name = sample_name, distance_cluster = distance1, distance_subcluster = distance2)
+    else:
+        if sample_name:
+            return render_template('subcluster.template', sample_name = sample_name)
+        else:
+            return render_template('subcluster.template')
+
 
 @myapp.route('/about')
 def about():

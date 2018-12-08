@@ -14,45 +14,7 @@
 <hr />
 <div class="row">
     <div id="table_col" class="col-md-5">
-    {% if clusters|length > 0 %}
-        <h4>Total<strong>SAMPLE COUNT</strong> Sample in <strong> {{ clusters|length }}</strong> clusters. 
-        <a class="btn-link pull-right" id="show_samples" onclick="ShowSamples();">(Show 1 Sample)</a></h4>
-        <h4>There are <strong>SINGLE HERD CLUSTER COUNT</strong> clusters from single herd, cluster Id: Cluster IDs</h4>
-
-        <table class="table table-striped tablesorter" id="sample_table">
-        <thead>
-            <tr>
-                <th><a href="#">#</a></th>
-                <th><a href="#">Cluster Size </a></th>
-                <th><a href="#">Samples in Cluster</a></th>
-                <th><input type="checkbox" id="check_all_cluster" onclick="check_all_cluster();" /></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cluster in clusters %}
-        {% if cluster|length != 0 %}
-        <tr>
-            {% set key_sample_name = cluster[0][0] %}
-            <td id='no_{{ key_sample_name }}'>{{ loop.index }}</td>
-            <td>{{ cluster|length }}</td>
-            <td id='map_{{ key_sample_name }}'>
-            
-               {% for sample_data in cluster %}
-               {% set sample_name = sample_data[0] %}
-               {% set sample_x = sample_data[1] %}
-               {% set sample_y = sample_data[2] %}
-                    <div class="sample_in_cluster">{{ sample_name }}, {{ sample_x }}, {{ sample_y }}</div>
-               {% endfor %}
-           
-            </td>
-            <td><input type="checkbox" class="cluster_tick" id="{{ key_sample_name }}" /></td>
-        </tr>
-        {% endif %}
-
-        {% endfor %}
-        </tbody>
-        </table>
-    {% endif %}
+        {% include 'clusterdata.template' %}
     </div>
     <div id="map_col" class="col-md-7">
         <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Toggle Map</p>
