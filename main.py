@@ -61,29 +61,31 @@ def sample():
 def sample_map():
     sample_name = request.args.get("sample_name")
 
-    req_lookup = requests.get('http://192.168.7.30:5008/lookup/{0}'.format(sample_name))
-    names_guids = json.loads(req_lookup.text)
+    names_guids = call_api('tree', '/lookup/{0}'.format(sample_name))
 
     my_guid = "Not found"
     other_guids = list()
 
     if names_guids:
         my_guid = names_guids[0][0]
-        sample_name = names_guids[0][1]
         for guid,_ in names_guids[1:]:
             other_guids.append(guid)
 
-    req_coord = requests.get('http://192.168.7.30:5006/coordinates2/{0}'.format(sample_name))
-    data = json.loads(req_coord.text)[0]
+    data = call_api('map', '/coordinates2/{0}'.format(sample_name))
+    if data:
+        map_x = data[0][2]
+        map_y = data[0][3]
+        herd_id = data[0][4]
+        eartag = data[0][7]
 
-    sample_name = data[0]
-    map_x = data[2]
-    map_y = data[3]
-    herd_id = data[4]
-    eartag = data[7]
-
-    req_movement = requests.get('http://192.168.7.30:5006/api/locations/{0}'.format(sample_name))
-    movement_data = json.loads(req_movement.text)['data'][sample_name]
+        req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
+        movement_data = req_movement['data'][sample_name]
+    else:
+        map_x = 'Not found'
+        map_y = 'Not found'
+        herd_id = 'Not found'
+        eartag = 'Not found'
+        movement_data = dict()
 
     return render_template('map.template',
                            sample_name = sample_name,
@@ -114,6 +116,10 @@ def sample_neighbour():
     same_herd_samples = 0
 
     guid_name_map = call_api('tree', '/lookup/{0}'.format(my_guid))
+
+    if not guid_name_map:
+        abort(500, description='Couldn\'t find data for sample oxford id: \'{0}\'.'.format(my_guid))
+
     sample_name = guid_name_map[0][1]
     data = call_api('map', '/coordinates2/{0}'.format(sample_name))[0]
 
@@ -226,6 +232,7 @@ def subcluster():
     if sample_name and distance1 and distance2:
         clusters_list = call_api('map', '/clusters2/{0}/{1}/{2}'.format(sample_name,distance1,distance2))
         clusters, sample_total = get_cluster_data(clusters_list)
+        print(clusters)
         return render_template('subcluster.template', clusters = clusters,sample_total = sample_total, sample_name = sample_name, distance_cluster = distance1, distance_subcluster = distance2)
     else:
         if sample_name:

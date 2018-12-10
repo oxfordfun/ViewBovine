@@ -15,6 +15,9 @@
     <span class="col-md-3"><input type="submit" value="Search Clusters" id="subcluster_submit" class="btn btn-danger" /></span>
 </div>
 </form>
+{% if sample_name and clusters|length == 0 %}
+<h3>Invalid sample name: '{{ sample_name }}'</h3>
+{% endif %}
 <div class="row">
         <div id="table_col" class="col-md-5">
             {% include 'clusterdata.template' %}
