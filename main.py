@@ -124,12 +124,9 @@ def sample_neighbour():
 
     if my_distance and my_quality:
         cohab = call_api('map', '/api/locations_cohabit_filter/{0}/{1}'.format(sample_name, my_distance), limit=2000)['data']
-        logger.debug(len(cohab))
         for k in cohab:
-            logger.debug(k)
             cohab_figures[k] = call_api('map', '/api/locations_cohabit_filter_figure/{0}/{1}/{2}'.format(
                 sample_name, my_distance, k), return_type='text', limit=2000)
-        logger.debug(cohab_figures)
 
         # [neighbour, distance]
         query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
