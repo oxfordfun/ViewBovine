@@ -64,12 +64,14 @@ def sample_map():
     req_lookup = requests.get('http://192.168.7.30:5008/lookup/{0}'.format(sample_name))
     names_guids = json.loads(req_lookup.text)
 
-    my_guid = names_guids[0][0]
-    sample_name = names_guids[0][1]
+    my_guid = "Not found"
     other_guids = list()
-    for guid,_ in names_guids[1:]:
-        other_guids.append(guid)
 
+    if names_guids:
+        my_guid = names_guids[0][0]
+        sample_name = names_guids[0][1]
+        for guid,_ in names_guids[1:]:
+            other_guids.append(guid)
 
     req_coord = requests.get('http://192.168.7.30:5006/coordinates2/{0}'.format(sample_name))
     data = json.loads(req_coord.text)[0]
@@ -181,21 +183,60 @@ def sample_neighbour():
 @myapp.route('/herd')
 def herd():
     herd_id = request.args.get('herd_id')
-    herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
-    import math
-    n = math.sqrt(len(herd_matrix))
-    return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
+    if herd_id != None:
+        herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
+        import math
+        n = math.sqrt(len(herd_matrix))
+        return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
+    else:
+        return render_template('herd.template', herd_id="", herd_matrix=[0], n=0)
+
+import functools
+
+@functools.lru_cache(maxsize=None)
+def lookup(names):
+    return call_api('map', '/coordinates2/{0}'.format(names))
+
+def get_cluster_data(clusters_list):
+    clusters = list()
+    sample_total = 0
+    for cluster in clusters_list:
+        sample_total = sample_total + len(cluster)
+        names = ",".join(cluster)
+        tbl = lookup(names)
+        cluster_item = [[row[0], row[2], row[3]] for row in tbl]
+        clusters.append(cluster_item)
+    return clusters, sample_total
 
 @myapp.route('/cluster')
 def cluster():
-    return render_template('cluster.template')
+    cluster_snp = request.args.get('cluster_snp')
+    if cluster_snp is not None and int(cluster_snp) >= 0 and int(cluster_snp) <= 20:
+        clusters_list = call_api('map', '/clusters/{0}'.format(cluster_snp))
+        clusters, sample_total = get_cluster_data(clusters_list)
+        return render_template('cluster.template', clusters = clusters, cluster_snp=cluster_snp, sample_total=sample_total)
+    else:
+        return render_template('cluster.template')
 
 @myapp.route('/subcluster')
 def subcluster():
-    return render_template('subcluster.template')
+    sample_name = request.args.get('sample_name')
+    distance1 = request.args.get('distance1')
+    distance2 = request.args.get('distance2')
+    if sample_name and distance1 and distance2:
+        clusters_list = call_api('map', '/clusters2/{0}/{1}/{2}'.format(sample_name,distance1,distance2))
+        clusters, sample_total = get_cluster_data(clusters_list)
+        return render_template('subcluster.template', clusters = clusters,sample_total = sample_total, sample_name = sample_name, distance_cluster = distance1, distance_subcluster = distance2)
+    else:
+        if sample_name:
+            return render_template('subcluster.template', sample_name = sample_name)
+        else:
+            return render_template('subcluster.template')
+
 
 @myapp.route('/about')
 def about():
     return render_template('about.template')
 
-myapp.run()
+if __name__ == "__main__":
+    myapp.run()

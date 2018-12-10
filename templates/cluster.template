@@ -4,15 +4,17 @@
 <div class="container body-content">    
 <h2>Cluster View</h2>
 <p>Set a SNP distance, search clusters and select one or more clusters to show on the map.</p>
-<form action="/cluster" data-ajax="true" id="form0" method="post">    <div class="row">
-        <span class="col-md-2">SNP Distance (0-20)</span>
-        <span><input size=2 class="form-input col-md-1" , type="number" min="0" max="20" name="id" value=20 /></span>
+<form action="/cluster" data-ajax="true" id="form0" method="get">    
+    <div class="row">
+        <span class="col-md-3">SNP Distance (0-20)</span>
+        <span><input size=2 class="form-input col-md-1" , type="number" min="0" max="20" name="cluster_snp" value=20 /></span>
         <span class="col-md-3"><input type="submit" value="Search Clusters" id="search_submit" class="btn btn-danger" /></span>
     </div>
 </form>
 <hr />
 <div class="row">
     <div id="table_col" class="col-md-5">
+        {% include 'clusterdata.template' %}
     </div>
     <div id="map_col" class="col-md-7">
         <p class="pull-right btn-link" id="view_toggle" onclick="switch_view();">Toggle Map</p>
