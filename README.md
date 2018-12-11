@@ -16,7 +16,7 @@ bTB Whole Genome Sequencing Application
 2. Leaflet for Map View (https://leafletjs.com/)
 3. GeoTools for WGS84-OSGB36 conversions (https://www.nearby.org.uk/tests/GeoTools2.html)
 
-## Functions
+# Functions
 
 1. Search a sample and show the related herd on the map 
 2. Show sample related cattle movements on the map
