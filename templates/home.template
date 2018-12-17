@@ -16,7 +16,7 @@
     <div class="col-md-4">
         <h2>Neighbourhood</h2>
         <p>Explore the sample neighbourhood, genetically and geographically. Has a cattle infected by staying with other cattle that is genetically related to bTB? </p>
-        <p><a class="btn btn-default btn-danger" href="/sample">Examine &raquo;</a></p>
+        <p><a class="btn btn-default btn-danger" href="/sample">Explore &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Genetic Clusters</h2>
