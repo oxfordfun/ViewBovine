@@ -10,8 +10,8 @@
     {% for guid in other_guids %}
     <form action="/sample/map" method="get">
       <div>{{ sample_name }}
-	      <input type="text", class="form-input hidden alert-link" name="sample_name" id="sample_guid" value={{ guid }} />
-	      <input type="submit" value={{ guid }} id="search_submit" class="btn-link" />
+	<input type="text", class="form-input hidden alert-link" name="sample_name" id="sample_guid" value={{ guid }} />
+	<input type="submit" value={{ guid }} id="search_submit" class="btn-link" />
       </div>
     </form>
     {% endfor %}
@@ -27,16 +27,20 @@
     </div>
     {% endif %}
   </div>
+  {% if sample_guid != 'Not found' %}
   <div class="col-md-7">
     <div id="mapid"></div>
     <p class="hidden"><span id="guid" >{{ sample_guid }}</span><span id="name">{{ sample_name }}</span></p>
   </div>
+  {% endif %}
 </div>
 
 {% endblock maincontent %}
 
+{% if sample_guid != 'Not found' %}
 {% block scripts %}
 <script src="/static/scripts/app/geotools.js"></script>
 <script src="/static/scripts/leaflet.polylineDecorator.js"></script>
 <script src="/static/scripts/app/map.js"></script>
 {% endblock scripts %}
+{% endif %}
