@@ -21,9 +21,9 @@ logger = logging.getLogger("fan_logger")
 
 def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
-        host = 'http://192.168.7.30:5008'
+        host = 'http://127.0.0.1:5008'
     elif kind == 'map':
-        host = 'http://192.168.7.30:5006'
+        host = 'http://127.0.0.1:5006'
     else:
         abort(500, description="unknown api host: {0}".format(kind))
 
@@ -246,4 +246,4 @@ def about():
     return render_template('about.template')
 
 if __name__ == "__main__":
-    myapp.run()
+    myapp.run(host='0.0.0.0', port=80)
