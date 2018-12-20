@@ -4,7 +4,7 @@
 
 <div class="container body-content">     
 <h2>Cluster Exploration</h2>
-<p>Set a SNP distance, and a subcluster Distance, search clusters and select one or more clusters to show on the map.</p>
+<p>Set a cluster distance, and a subcluster distance (subcluster <= cluster SNPs), search clusters and select one or more clusters to show on the map.</p>
 <form action="/subcluster" data-ajax="true" id="form0" >    
 <div class="row">
     <span class="col-md-2">Sample Name</span>
@@ -15,9 +15,6 @@
     <span class="col-md-3"><input type="submit" value="Search Clusters" id="subcluster_submit" class="btn btn-danger" /></span>
 </div>
 </form>
-{% if sample_name and clusters|length == 0 %}
-<h3>Invalid sample name: '{{ sample_name }}'</h3>
-{% endif %}
 <div class="row">
         <div id="table_col" class="col-md-5">
             {% include 'clusterdata.template' %}
