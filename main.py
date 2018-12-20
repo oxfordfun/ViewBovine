@@ -1,10 +1,16 @@
 import logging
 import requests
 import json
+import os
 
 from flask import Flask, render_template, abort, request
 
 myapp = Flask(__name__)
+#Use enviornment variable to define the configuration
+#for development in Windows:   set APP_SETTINGS='config.DevelopmentConfig'
+#for testing in ubuntun: export APP_SETTINGS='config.TestingConfig'
+#for production in ubuntun: export APP_SETTINGS='config.ProductionConfig'
+myapp.config.from_object(os.environ['APP_SETTINGS'])
 
 def setup_logging():
     #
@@ -21,9 +27,9 @@ logger = logging.getLogger("fan_logger")
 
 def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
-        host = 'http://127.0.0.1:5008'
+        host = myapp.config['TREE_SERVER']
     elif kind == 'map':
-        host = 'http://127.0.0.1:5006'
+        host = myapp.config['MAP_SERVER']
     else:
         abort(500, description="unknown api host: {0}".format(kind))
 
@@ -246,4 +252,5 @@ def about():
     return render_template('about.template')
 
 if __name__ == "__main__":
-    myapp.run(host='0.0.0.0', port=80)
+    app_port = myapp.config['APP_PORT']
+    myapp.run(host='0.0.0.0', port=app_port)
