@@ -216,7 +216,7 @@ def get_cluster_data(clusters_list):
         sample_total = sample_total + len(cluster)
         names = ",".join(cluster)
         tbl = lookup(names)
-        cluster_item = [[row[0], row[2], row[3]] for row in tbl]
+        cluster_item = [[row[0], row[2], row[3], row[7], row[4]] for row in tbl]
         clusters.append(cluster_item)
     return clusters, sample_total
 

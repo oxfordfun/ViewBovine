@@ -26,7 +26,9 @@
                     {% set sample_name = sample_data[0] %}
                     {% set sample_x = sample_data[1] %}
                     {% set sample_y = sample_data[2] %}
-                    <div class="sample_in_cluster">{{ sample_name }}, {{ sample_x }}, {{ sample_y }}</div>
+                    {% set eartag = sample_data[3] %}
+                    {% set herd_id = sample_data[4] %}
+                    <div class="sample_in_cluster">{{ sample_name }}, {{ sample_x }}, {{ sample_y }}, <br>[<strong>{{ eartag }}</strong>]({{ herd_id }})</div>
                {% endfor %}
             </td>
             <td><input type="checkbox" class="cluster_tick" id="{{ key_sample_name }}" /></td>
