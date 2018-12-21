@@ -228,7 +228,7 @@ def cluster():
         clusters, sample_total = get_cluster_data(clusters_list)
         return render_template('cluster.template', clusters = clusters, cluster_snp=cluster_snp, sample_total=sample_total)
     else:
-        return render_template('cluster.template')
+        return render_template('cluster.template', cluster_snp=20)
 
 @myapp.route('/subcluster')
 def subcluster():

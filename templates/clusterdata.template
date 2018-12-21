@@ -20,6 +20,8 @@
             <td id='map_{{ key_sample_name }}'>
                 <form action="/subcluster" method="get"> 
                     <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_guid" value="{{ key_sample_name }}" />
+                    <input type="text" , class="form-input hidden alert-link" name="distance1" id="distance1" value="{{ cluster_snp }}" />
+                    <input type="text" , class="form-input hidden alert-link" name="distance2" id="distance2" value="{{ cluster_snp }}" />
                     <input type="submit" value="{{ key_sample_name }}" id="search_submit" class="btn-link" />
                 </form>                          
                {% for sample_data in cluster %}

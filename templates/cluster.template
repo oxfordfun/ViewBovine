@@ -7,7 +7,7 @@
 <form action="/cluster" data-ajax="true" id="form0" method="get">    
     <div class="row">
         <span class="col-md-3">SNP Distance (0-20)</span>
-        <span><input size=2 class="form-input col-md-1" , type="number" min="0" max="20" name="cluster_snp" value=20 /></span>
+        <span><input size=2 class="form-input col-md-1" , type="number" min="0" max="20" name="cluster_snp" value="{{ cluster_snp }}" /></span>
         <span class="col-md-3"><input type="submit" value="Search Clusters" id="search_submit" class="btn btn-danger" /></span>
     </div>
 </form>
