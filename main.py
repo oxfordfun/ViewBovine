@@ -124,13 +124,14 @@ def sample():
 def sample_map():
     sample_name = request.args.get("sample_name")
 
-    names_guids = call_api('tree', '/lookup/{0}'.format(sample_name))
+    names_guids = call_api('map', '/api/lookup/{0}'.format(sample_name))
 
     my_guid = "Not found"
     other_guids = list()
 
     if names_guids:
         my_guid = names_guids[0][0]
+        sample_name = names_guids[0][1]
         for guid,_ in names_guids[1:]:
             other_guids.append(guid)
 
@@ -179,7 +180,7 @@ def sample_neighbour():
     # number of members of the herd with the parent sample name
     same_herd_samples = 0
 
-    guid_name_map = call_api('tree', '/lookup/{0}'.format(my_guid))
+    guid_name_map = call_api('map', '/api/lookup/{0}'.format(my_guid))
 
     if not guid_name_map:
         abort(500, description='Couldn\'t find data for sample oxford id: \'{0}\'.'.format(my_guid))
@@ -204,11 +205,12 @@ def sample_neighbour():
         query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
         neighbours = call_api('tree', query_fmt.format(my_guid, my_distance, my_quality))
 
+
         # get sample names
         if neighbours:
             neighbour_guids = [x[0] for x in neighbours]
             neighbour_guids = ",".join(neighbour_guids)
-            neighbour_guids_names = call_api('tree', '/lookup/{0}'.format(neighbour_guids))
+            neighbour_guids_names = call_api('map', '/api/lookup/{0}'.format(neighbour_guids))
 
             # build dict name -> distance
             for guid,name in neighbour_guids_names:
