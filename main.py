@@ -80,18 +80,19 @@ def login():
         form_username = request.form['username']
         form_password = request.form['password']
 
-        '''
-        Check user authorization
-        '''
-        ldap_host = '192.168.7.16'
-        conn = Connection(ldap_host,
-                          user=form_username,
-                          password=form_password,
-                          read_only=True)
-        if not conn.bind():
-            logger.warning("invalid credentials for ldap user {0}".format(form_username))
-            return redirect('/')
-
+        if app.config['AUTH']:
+            '''
+            Check user authorization
+            '''
+            ldap_host = '192.168.7.16'
+            conn = Connection(ldap_host,
+                              user=form_username,
+                              password=form_password,
+                              read_only=True)
+            if not conn.bind():
+                logger.warning("invalid credentials for ldap user {0}".format(form_username))
+                return redirect('/')
+    
         '''
         User is authorized
         '''
