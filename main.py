@@ -298,7 +298,6 @@ def subcluster():
     if sample_name and distance1 and distance2:
         clusters_list = call_api('map', '/clusters2/{0}/{1}/{2}'.format(sample_name,distance1,distance2))
         clusters, sample_total = get_cluster_data(clusters_list)
-        print(clusters)
         return render_template('subcluster.template', clusters = clusters,sample_total = sample_total, sample_name = sample_name, distance_cluster = distance1, distance_subcluster = distance2)
     else:
         if sample_name:

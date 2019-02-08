@@ -24,3 +24,6 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
+    APP_PORT = 5080
+    TREE_SERVER = 'http://192.168.7.30:5008'
+    MAP_SERVER = 'http://192.168.7.30:5006'
