@@ -12,7 +12,7 @@ class DevelopmentConfig(Config):
     AUTH = False
     APP_PORT = 5080
     TREE_SERVER = 'http://192.168.7.30:5008'
-    MAP_SERVER = 'http://192.168.7.30:5006'
+    MAP_SERVER = 'http://192.168.7.30:5007'
 
 
 class TestingConfig(Config):
