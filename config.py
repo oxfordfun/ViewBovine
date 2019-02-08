@@ -1,7 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -17,7 +16,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = False
-    APP_PORT = 80
+    APP_PORT = 5080
     TREE_SERVER = 'http://127..0.0.1:5008'
     MAP_SERVER = 'http://127.0.0.1:5006'
 

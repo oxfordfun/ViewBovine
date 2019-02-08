@@ -3,14 +3,31 @@ import requests
 import json
 import os
 
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, redirect
+import flask_login
+from ldap3 import Connection
 
-myapp = Flask(__name__)
+app = Flask(__name__)
+app.secret_key = 'secret key'
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = '/login'
+
+class User(flask_login.UserMixin):
+    pass
+
+@login_manager.user_loader
+def user_loader(username):
+    user = User()
+    user.id = username
+    return user
+
 #Use enviornment variable to define the configuration
 #for development in Windows:   set APP_SETTINGS='config.DevelopmentConfig'
 #for testing in ubuntun: export APP_SETTINGS='config.TestingConfig'
 #for production in ubuntun: export APP_SETTINGS='config.ProductionConfig'
-myapp.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(os.environ['APP_SETTINGS'])
 
 def setup_logging():
     #
@@ -27,9 +44,9 @@ logger = logging.getLogger("fan_logger")
 
 def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
-        host = myapp.config['TREE_SERVER']
+        host = app.config['TREE_SERVER']
     elif kind == 'map':
-        host = myapp.config['MAP_SERVER']
+        host = app.config['MAP_SERVER']
     else:
         abort(500, description="unknown api host: {0}".format(kind))
 
@@ -55,15 +72,54 @@ def call_api(kind, path, return_type='json', limit=80):
     else:
         return req_api.text
 
-@myapp.route('/')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.template')
+    else:
+        form_username = request.form['username']
+        form_password = request.form['password']
+
+        '''
+        Check user authorization
+        '''
+        ldap_host = '192.168.7.16'
+        conn = Connection(ldap_host,
+                          user=form_username,
+                          password=form_password,
+                          read_only=True)
+        if not conn.bind():
+            logger.warning("invalid credentials for ldap user {0}".format(form_username))
+            return redirect('/')
+
+        '''
+        User is authorized
+        '''
+        logger.info("ldap user {0} logged in".format(form_username))
+
+        user = User()
+        user.id = form_username
+        flask_login.login_user(user)
+
+        return redirect('/')
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect('/')
+
+@app.route('/')
+@flask_login.login_required
 def home():
     return render_template('home.template')
 
-@myapp.route('/sample')
+@app.route('/sample')
+@flask_login.login_required
 def sample():
     return render_template('sample.template')
 
-@myapp.route('/sample/map/')
+@app.route('/sample/map/')
+@flask_login.login_required
 def sample_map():
     sample_name = request.args.get("sample_name")
 
@@ -105,7 +161,8 @@ def sample_map():
                            title = 'Sample and Herd'
     )
 
-@myapp.route('/sample/neighbour/')
+@app.route('/sample/neighbour/')
+@flask_login.login_required
 def sample_neighbour():
     my_guid = request.args.get("sample_guid")
     my_distance = request.args.get('distance')
@@ -192,7 +249,8 @@ def sample_neighbour():
                            movement_data = movement_data
     )
 
-@myapp.route('/herd')
+@app.route('/herd')
+@flask_login.login_required
 def herd():
     herd_id = request.args.get('herd_id')
     if herd_id != None:
@@ -220,7 +278,8 @@ def get_cluster_data(clusters_list):
         clusters.append(cluster_item)
     return clusters, sample_total
 
-@myapp.route('/cluster')
+@app.route('/cluster')
+@flask_login.login_required
 def cluster():
     cluster_snp = request.args.get('cluster_snp')
     if cluster_snp is not None and int(cluster_snp) >= 0 and int(cluster_snp) <= 20:
@@ -230,7 +289,8 @@ def cluster():
     else:
         return render_template('cluster.template', cluster_snp=20)
 
-@myapp.route('/subcluster')
+@app.route('/subcluster')
+@flask_login.login_required
 def subcluster():
     sample_name = request.args.get('sample_name')
     distance1 = request.args.get('distance1')
@@ -247,10 +307,11 @@ def subcluster():
             return render_template('subcluster.template')
 
 
-@myapp.route('/about')
+@app.route('/about')
+@flask_login.login_required
 def about():
     return render_template('about.template')
 
 if __name__ == "__main__":
-    app_port = myapp.config['APP_PORT']
-    myapp.run(host='0.0.0.0', port=app_port)
+    app_port = app.config['APP_PORT']
+    app.run(host='0.0.0.0', port=app_port)

@@ -35,8 +35,9 @@
             <li><a href="/cluster">Cluster</a></li>
             <li><a href="/subcluster">SubCluster</a></li>              
             <li><a href="/about">About</a></li>
-          </ul>
-        </div>
+	    <li><a href="/logout">Log off</a></li>
+	  </ul>
+	</div>
       </div>
     </div>
     <div class="container body-content">
