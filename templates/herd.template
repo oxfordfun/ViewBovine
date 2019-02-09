@@ -7,7 +7,7 @@
   <form action="/herd" data-ajax="true" id="form_herd" method="get">    
 		<div class="row">
 			<div class="container">
-					<span><input size=9 class="form-input col-md-4", name="herd_id" value={{ herd_id }}></span>
+					<span><input size=9 class="form-input col-md-4", name="herd_id" placeholder="9-digit CPH or 11-digit CPHH required."  value={{ herd_id }}></span>
 					<span class="col-md-3"><input type="submit" value="Search Herds" id="search_submit" class="btn btn-danger" /></span>
 			</div>
     </div>

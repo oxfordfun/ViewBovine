@@ -267,23 +267,19 @@ def samplelist():
 @flask_login.login_required
 def herd():
     herd_id = request.args.get('herd_id')
+    cph = list()
     import math
     if herd_id != None:
         if len(herd_id) == 11: #Search CPHH
             herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
             n = math.sqrt(len(herd_matrix))
             cph = [[herd_id, herd_matrix, int(n)]]
-            return render_template('herd.template', cph=cph)
         elif len(herd_id) == 9: #Search CPH
             herd_matrix_dict = call_api('map', '/api/herdmatrix/cph/{0}'.format(herd_id))
-            cph = []
             for k, v in herd_matrix_dict.items():
                 n = math.sqrt(len(v))
                 cph.append([k, v, int(n)])
-            return render_template('herd.template', cph=cph)
-    else:
-        cph = []
-        return render_template('herd.template', cph=cph )
+    return render_template('herd.template', cph=cph )
 
 import functools
 
