@@ -256,13 +256,23 @@ def sample_neighbour():
 @flask_login.login_required
 def herd():
     herd_id = request.args.get('herd_id')
+    import math
     if herd_id != None:
-        herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
-        import math
-        n = math.sqrt(len(herd_matrix))
-        return render_template('herd.template', herd_id=herd_id, herd_matrix=herd_matrix, n=int(n))
+        if len(herd_id) == 11: #Search CPHH
+            herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
+            n = math.sqrt(len(herd_matrix))
+            cph = [[herd_id, herd_matrix, int(n)]]
+            return render_template('herd.template', cph=cph)
+        elif len(herd_id) == 9: #Search CPH
+            herd_matrix_dict = call_api('map', '/api/herdmatrix/cph/{0}'.format(herd_id))
+            cph = []
+            for k, v in herd_matrix_dict.items():
+                n = math.sqrt(len(v))
+                cph.append([k, v, int(n)])
+            return render_template('herd.template', cph=cph)
     else:
-        return render_template('herd.template', herd_id="", herd_matrix=[0], n=0)
+        cph = [["", [[0]], 0]]
+        return render_template('herd.template', cph=cph )
 
 import functools
 
@@ -307,7 +317,6 @@ def subcluster():
             return render_template('subcluster.template', sample_name = sample_name)
         else:
             return render_template('subcluster.template')
-
 
 @app.route('/about')
 @flask_login.login_required
