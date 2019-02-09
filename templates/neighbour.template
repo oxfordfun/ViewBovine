@@ -49,7 +49,7 @@
 	      <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ neighbour[0] }}" />
 	      <input type="submit" value="{{ neighbour[0] }}" id="sample_search" class="btn-link" />
 	      <span id='name_{{ neighbour[0] }}' class="hidden">{{ neighbour[0] }}</span></form></td>
-	  <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div> <br> <div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
+	  <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div><div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
 	  <td><span id="distance_{{ neighbour[0] }}">{{ neighbours_dict[neighbour[0]] }}</span></td>
 	  <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
 	</tr>
