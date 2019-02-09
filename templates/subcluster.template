@@ -4,7 +4,11 @@
 
 <div class="container body-content">     
 <h2>Cluster Exploration</h2>
-<p>Set a cluster distance, and a subcluster distance (subcluster <= cluster SNPs), search clusters and select one or more clusters to show on the map.</p>
+<span>Give a <strong>sample name</strong>, <strong>a cluster SNPs (0-20)</strong> and a <strong>sub-cluster SNPs(0-20)</strong>, explore sub-cluster of a cluster.</span><br/>
+<span>e.g. sampel name: AF-21-07824-17, cluster SNPs: 6, sub-cluster SNPs: 6, the result is one cluster of 6 SNPs which includes the sample.</span><br />
+<span>e.g. sampel name: AF-21-07824-17, cluster SNPs: 6, sub-cluster SNPs: 3, the result is a few sub-clusters of 3 SNPs within the cluster of 6 SNPs.</span><br />
+<span>Cluster SNPs must be equal or greater than sub-cluster SNPs</span>
+<hr />
 <form action="/subcluster" data-ajax="true" id="form0" >    
 <div class="row">
     <span class="col-md-2">Sample Name</span>
