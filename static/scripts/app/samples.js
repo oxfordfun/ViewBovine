@@ -1,7 +1,30 @@
 ﻿$(document).ready(function () {
     $("#sample_table").tablesorter();
     $("#sample_table").tablesorter({ sortList: [[0, 0], [1, 0]] });
+    $("#list_table").tablesorter();
+    $("#list_table").tablesorter({ sortList: [[0, 0], [1, 0]] });
+
 });
+
+$('#search_apha_sample').keyup(function () {
+    var searchStr = $(this).val();
+    searchStr = searchStr.toLowerCase();
+    var total = 0;
+    $("#list_table tr").each(function (index) {
+        if (!index) return;
+        var herd = $(this).find("td").eq(1).text().toLowerCase();
+        var eartag = $(this).find("td").eq(2).text().toLowerCase();
+        var name = $(this).find("td").eq(3).text().toLowerCase();
+        if (herd.indexOf(searchStr) !== -1 || eartag.indexOf(searchStr) !== -1 || name.indexOf(searchStr) !== -1) {
+            $(this).toggle(true);
+            total++;
+        }
+        else
+            $(this).toggle(false);
+    });
+    $("#samplecount").text(" " + total + " results");
+});
+
 
 function switch_view() {
     var view_toggle = document.getElementById("view_toggle");

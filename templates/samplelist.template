@@ -50,3 +50,8 @@
 {% endif %}
     </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="/static/scripts/jquery.tablesorter.js"></script>
+<script src="/static/scripts/app/samples.js"></script>
+{% endblock scripts %}
