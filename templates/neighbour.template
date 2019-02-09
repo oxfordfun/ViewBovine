@@ -32,7 +32,7 @@
 	<tr>
 	  <th><a href="#">#</a></th>
 	  <th>Herd</th>
-	  <th>Name></th>
+	  <th>Name</th>
 	  <th><a href="#">Map </a></th>
 	  <th><a href="#">Distance</a></th>
 	  <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
