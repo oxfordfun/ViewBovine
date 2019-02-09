@@ -271,7 +271,7 @@ def herd():
                 cph.append([k, v, int(n)])
             return render_template('herd.template', cph=cph)
     else:
-        cph = [["", [[0]], 0]]
+        cph = []
         return render_template('herd.template', cph=cph )
 
 import functools
