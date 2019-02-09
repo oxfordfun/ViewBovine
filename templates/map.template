@@ -29,6 +29,8 @@
   </div>
   {% if sample_guid != 'Not found' %}
   <div class="col-md-7">
+    <input type="checkbox" id="show_movement" onclick="show_movement_line();" />
+    <label for="show_movement">Show cattle movement on the map </label>
     <div id="mapid"></div>
     <p class="hidden"><span id="guid" >{{ sample_guid }}</span><span id="name">{{ sample_name }}</span></p>
   </div>

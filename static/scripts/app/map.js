@@ -3,6 +3,7 @@ var targetsample_x = document.getElementById('map_x');
 var targetsample_y = document.getElementById('map_y');
 var targetsample_guid = document.getElementById("guid");
 var targetsample_name = document.getElementById("name");
+var show_movement = document.getElementById("show_movement");
 var polygon_list = [];
 
 var mymap = null;
@@ -33,24 +34,38 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 
 var moveticks = document.getElementsByClassName("move_tick");
 
-if (moveticks.length > 0) {
-    var locationlist = [];
-    for (i = 0; i < moveticks.length; i++){
-        var location_x = moveticks[i].id.split("_")[0];
-        var location_y = moveticks[i].id.split("_")[1];
-        var locations = convert2latlon(location_x, location_y);
-        var lat = locations[0].toFixed(6);
-        var lon = locations[1].toFixed(6);
-        locationlist[i] = [lat, lon];
+function show_movement_line() {
+    if (moveticks.length > 0 && show_movement.checked) {
+        var locationlist = [];
+        for (i = 0; i < moveticks.length; i++) {
+            var location_x = moveticks[i].id.split("_")[0];
+            var location_y = moveticks[i].id.split("_")[1];
+            var locations = convert2latlon(location_x, location_y);
+            var lat = locations[0].toFixed(6);
+            var lon = locations[1].toFixed(6);
+            locationlist[i] = [lat, lon];
+        }
+        var polyline = L.polyline(locationlist, { color: '#CD5C5C' }).addTo(mymap);
+        var markerPatterns = L.polylineDecorator(polyline, {
+            patterns: [
+                { offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({ pixelSize: 10, pathOptions: { color: '#CD5C5C', fillOpacity: 1, weight: 0 } }) }
+            ]
+        }).addTo(mymap);
     }
-    var polyline = L.polyline(locationlist, { color: 'darkred' }).addTo(mymap);
-    var markerPatterns = L.polylineDecorator(polyline, {
-        patterns: [
-            { offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({ pixelSize: 15, pathOptions: { color: 'darkred', fillOpacity: 1, weight: 0 } }) }
-        ]
-    }).addTo(mymap);
-
+    else {
+        for (i in mymap._layers) {
+            if (mymap._layers[i]._path != undefined) {
+                try {
+                    mymap.removeLayer(mymap._layers[i]);
+                }
+                catch (e) {
+                    console.log("problem with " + e + mymap._layers[i]);
+                }
+            }
+        }
+    }
 }
+
 
 var markerGroup = L.layerGroup().addTo(mymap); 
 
