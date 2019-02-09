@@ -5,4 +5,21 @@
     <h1>ViewBovine</h1>
     <p class="lead">ViewBovine is a Web Portal for exploring WGS data of M.bovis, linking genetic relatedness with geographical neighbourhood for understanding bTB transmission.</p>
 </div>
+<div class="container">
+    <h2>Terminology</h2>
+    <p><strong>WGS</strong> - Whole Genome Sequencing</p>
+    <p><strong>DNA</strong> - Deoxyribonucleic Acid, the molecule that is the hereditary material in all living cells</p>
+    <p><strong>ACGT</strong> - an acronym for the four types of bases found in a DNA molecule: adenine (A), cytosine (C), guanine (G), and thymine (T).</p>
+    <p><strong>Genome</strong> - the genetic material of an organism. It consists of DNA (or RNA in RNA viruses).</p>
+    <p><strong>SNPs </strong>- Single nucleotide polymorphisms, frequently called SNPs (pronounced “snips”). Each SNP represents a difference in a single DNA building block, called a nucleotide. Most commonly, these variations are found in two different DNA. </p>
+    <p><strong>SNP Based Clustering</strong> - The simplest way to determine sequence relatedness is to count the number of SNPs that differ between two sequences. The SNP threshold approach places two individuals in the same putative transmission cluster if there are fewer than a threshold number of SNPs between their sequenced pathogen genomes.</p>
+    <h2>Genome Analysis</h2>
+    <p>Genome analysis of bacteria like tuberculosis has the potential to radically improve the detection of disease transmission [1]. Single Nucleotide Polymorphism (SNP) analysis is a common initial step to rapidly detect the relationships between sequences of bacteria species. Bacteria, like tuberculosis, has a genome size about four megabases. The SNP analysis involves aligning the sequence reads on each individual bases and identifying a consensus base at each position. Genetic relatedness can be defined by the SNP distance, i.e. how many bases are different between two bacteria genome. In some cases, the SNP analysis is sufficient to generate epidemiologically important information. In other cases, phylogenetic tree based on the evolutionary inference are also needed to adjust estimates of divergence [2]. In our tool, we present SNP distance to show the genetic relatedness of M. bovis samples. </p>
+    <h3>Reference</h3>
+    <ol>
+        <li>Walker TM, Monk P, Smith EG, Peto TE. (2013). Contact investigations for outbreaks of mycobacterium tuberculosis: advances through whole genome sequencing. Clin Microbiol Infect. 2013;19(9):796–802 </li>
+        <li>Eyre DW, Cule ML, Wilson DJ, Griffiths D, Vaughan A, O'Connor L, Ip CL, Golubchik T, Batty EM, Finney JM, et al. (2013). Diverse sources of C. Difficile infection identified on whole-genome sequencing. New England Journal of Medicine. 2013; 369(13):1195–1205 </li>
+    </ol>
+</div>
+
 {% endblock content %}
