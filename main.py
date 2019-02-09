@@ -195,7 +195,10 @@ def sample_neighbour():
     herd_id = data[4]
     eartag = data[7]
 
-    movement_data = call_api('map', '/api/locations/{0}'.format(sample_name))['data'][sample_name]
+    movement_data = dict();
+    req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
+    if req_movement['data']:
+        movement_data = req_movement['data'][sample_name]
 
     if my_distance and my_quality:
         cohab = call_api('map', '/api/locations_cohabit_filter/{0}/{1}'.format(sample_name, my_distance), limit=2000)['data']
