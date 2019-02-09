@@ -136,6 +136,7 @@ def sample_map():
             other_guids.append(guid)
 
     data = call_api('map', '/coordinates2/{0}'.format(sample_name))
+    movement_data = dict()
     if data:
         map_x = data[0][2]
         map_y = data[0][3]
@@ -143,13 +144,14 @@ def sample_map():
         eartag = data[0][7]
 
         req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
-        movement_data = req_movement['data'][sample_name]
+        if req_movement['data']:
+            movement_data = req_movement['data'][sample_name]
     else:
         map_x = 'Not found'
         map_y = 'Not found'
         herd_id = 'Not found'
         eartag = 'Not found'
-        movement_data = dict()
+        
 
     return render_template('map.template',
                            sample_name = sample_name,
@@ -251,6 +253,12 @@ def sample_neighbour():
                            same_herd_samples = same_herd_samples,
                            movement_data = movement_data
     )
+
+@app.route('/samplelist')
+@flask_login.login_required
+def samplelist():
+    sample_list = call_api('map', '/api/coordinates')
+    return render_template('samplelist.template', sample_list=sample_list)
 
 @app.route('/herd')
 @flask_login.login_required

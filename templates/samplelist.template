@@ -1,0 +1,52 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<div class="container">
+  <h2>All Samples</h2>
+<div class="form-group form-inline">
+    <label for="promt">Filter samples by Herd, Ear Tag or Name</label>
+    <input type="text" class="form-control" id="search_apha_sample" placeholder="Type to filter the list"><span id="samplecount"> {{ sample_list | length}} samples</span>
+</div>
+{% if sample_list | length > 0 %}
+{% set count = 0 %}
+<table class="table table-striped tablesorter" id="list_table">
+    <thead>
+        <tr>
+            <th><a href="#">#</a></th>
+            <th><a href="#">Herd </a></th>
+            <th><a href="#">Ear Tag </a></th>
+            <th><a href="#">Name</a></th>
+            <th><a href="#">Reference Year </a></th>
+            <th><a href="#">Test Date</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for sample in sample_list %}
+        {% set count = count + 1 %}
+        {% set date = sample[5].split(' ')[0]%}
+        <tr>
+            <td>{{ count }}</td>
+            <td>{{ sample[4] }}</td>
+            <td>{{ sample[7] }}</td>
+            <td>{{ sample[0] }}</td>
+            <td>{{ sample[6] }}</td>
+            <td>{{ date }}</td>
+            <td>
+                <div>
+                    <form action="/sample/map/">
+                        <span>
+                            <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ sample[0] }}" />
+                            <input type="submit" value="Detail" id="sample_search" class="btn-link" />
+                        </span>
+                    </form>     
+                </div>          
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endif %}
+    </div>
+{% endblock content %}
