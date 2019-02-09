@@ -36,6 +36,10 @@ textarea, table {
     font-size:12px;
 }
 
+.table tbody>tr>td {
+    padding: 3px;
+}
+
 #phylocanvas {
     height: 1000px;
     width: 1140px;
