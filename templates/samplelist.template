@@ -2,14 +2,12 @@
 
 {% block content %}
 
-<div class="container">
-  <h2>All Samples</h2>
+<h2>All Samples</h2>
 <div class="form-group form-inline">
     <label for="promt">Filter samples by Herd, Ear Tag or Name</label>
     <input type="text" class="form-control" id="search_apha_sample" placeholder="Type to filter the list"><span id="samplecount"> {{ sample_list | length}} samples</span>
 </div>
 {% if sample_list | length > 0 %}
-{% set count = 0 %}
 <table class="table table-striped tablesorter" id="list_table">
     <thead>
         <tr>
@@ -24,10 +22,9 @@
     </thead>
     <tbody>
     {% for sample in sample_list %}
-        {% set count = count + 1 %}
         {% set date = sample[5].split(' ')[0]%}
         <tr>
-            <td>{{ count }}</td>
+            <td>{{ loop.index }}</td>
             <td>{{ sample[4] }}</td>
             <td>{{ sample[7] }}</td>
             <td>{{ sample[0] }}</td>
@@ -48,7 +45,6 @@
     </tbody>
     </table>
 {% endif %}
-    </div>
 {% endblock content %}
 
 {% block scripts %}
