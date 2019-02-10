@@ -125,7 +125,8 @@ def sample():
 def sample_map():
     sample_name = request.args.get("sample_name")
     if len(sample_name) == 0:
-        return render_template('sample.template')
+        last_updates = call_api('map', '/api/describe')
+        return render_template('sample.template', last_updates = last_updates)
     else:
         names_guids = call_api('map', '/api/lookup/{0}'.format(sample_name))
         my_guid = "Not found"
