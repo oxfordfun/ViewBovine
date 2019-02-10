@@ -123,34 +123,33 @@ def sample():
 @flask_login.login_required
 def sample_map():
     sample_name = request.args.get("sample_name")
-
-    names_guids = call_api('map', '/api/lookup/{0}'.format(sample_name))
-
-    my_guid = "Not found"
-    other_guids = list()
-
-    if names_guids:
-        my_guid = names_guids[0][0]
-        sample_name = names_guids[0][1]
-        for guid,_ in names_guids[1:]:
-            other_guids.append(guid)
-
-    data = call_api('map', '/coordinates2/{0}'.format(sample_name))
-    movement_data = dict()
-    if data:
-        map_x = data[0][2]
-        map_y = data[0][3]
-        herd_id = data[0][4]
-        eartag = data[0][7]
-
-        req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
-        if req_movement['data']:
-            movement_data = req_movement['data'][sample_name]
+    if len(sample_name) == 0:
+        return render_template('sample.template')
     else:
-        map_x = 'Not found'
-        map_y = 'Not found'
-        herd_id = 'Not found'
-        eartag = 'Not found'
+        names_guids = call_api('map', '/api/lookup/{0}'.format(sample_name))
+        my_guid = "Not found"
+        other_guids = list()
+
+        if names_guids:
+            my_guid = names_guids[0][0]
+            sample_name = names_guids[0][1]
+            for guid,_ in names_guids[1:]:
+                other_guids.append(guid)
+        data = call_api('map', '/coordinates2/{0}'.format(sample_name))
+        movement_data = dict()
+        if data:
+            map_x = data[0][2]
+            map_y = data[0][3]
+            herd_id = data[0][4]
+            eartag = data[0][7]
+            req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
+            if req_movement['data']:
+                movement_data = req_movement['data'][sample_name]
+        else:
+            map_x = 'Not found'
+            map_y = 'Not found'
+            herd_id = 'Not found'
+            eartag = 'Not found'
         
 
     return render_template('map.template',
