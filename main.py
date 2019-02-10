@@ -117,7 +117,8 @@ def home():
 @app.route('/sample')
 @flask_login.login_required
 def sample():
-    return render_template('sample.template')
+    last_updates = call_api('map', '/api/describe')
+    return render_template('sample.template', last_updates = last_updates)
 
 @app.route('/sample/map/')
 @flask_login.login_required

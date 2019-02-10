@@ -13,4 +13,18 @@
     <span><strong>Sample Name</strong> (e.g. AF-12-00008-18) or</span><br />
     <span><strong>Guid</strong> (e.g. b1460e0f-3ab8-4d08-a885-4fcd67078fb9)</span>
 </div>
+<div class="container">
+  {% for key, value in last_updates.items() %}
+      {% if key == 'data' %}
+        {%for k, v in value.items()%}
+           {% if k == 'map' %}
+              {%for k1, v1 in v.items()%}   
+                 {{k1 |  replace("_", " ")}}:<strong>{{v1}}</strong>  
+              {%endfor%}
+            {%endif%}
+        {% endfor %}
+      {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock content %}
