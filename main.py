@@ -330,9 +330,9 @@ def subcluster():
         return render_template('subcluster.template', clusters = clusters,sample_total = sample_total, sample_name = sample_name, distance_cluster = distance1, distance_subcluster = distance2)
     else:
         if sample_name:
-            return render_template('subcluster.template', sample_name = sample_name)
+            return render_template('subcluster.template', sample_name = sample_name, distance_cluster = 6, distance_subcluster = 6)
         else:
-            return render_template('subcluster.template')
+            return render_template('subcluster.template', distance_cluster = 6, distance_subcluster = 6)
 
 @app.route('/about')
 @flask_login.login_required
