@@ -49,7 +49,7 @@
 
       <hr />
       <footer>
-        <p>Developed by Fan&Denis &copy; 2018 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
+        <p>Version {{ version }}. Developed by Fan&Denis &copy; 2018 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
       </footer>
     </div>
     

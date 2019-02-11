@@ -7,6 +7,8 @@ from flask import Flask, render_template, abort, request, redirect
 import flask_login
 from ldap3 import Connection
 
+import git_utils
+
 app = Flask(__name__)
 app.secret_key = 'secret key'
 
@@ -28,6 +30,12 @@ def user_loader(username):
 #for testing in ubuntun: export APP_SETTINGS='config.TestingConfig'
 #for production in ubuntun: export APP_SETTINGS='config.ProductionConfig'
 app.config.from_object(os.environ['APP_SETTINGS'])
+
+version = git_utils.git_describe('.')
+
+@app.context_processor
+def inject_globals():
+    return dict(version=version)
 
 def setup_logging():
     #
@@ -92,7 +100,7 @@ def login():
             if not conn.bind():
                 logger.warning("invalid credentials for ldap user {0}".format(form_username))
                 return redirect('/')
-    
+
         '''
         User is authorized
         '''
@@ -152,7 +160,7 @@ def sample_map():
             map_y = 'Not found'
             herd_id = 'Not found'
             eartag = 'Not found'
-        
+
 
     return render_template('map.template',
                            sample_name = sample_name,
