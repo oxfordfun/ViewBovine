@@ -13,7 +13,7 @@
 <div class="row">
     <span class="col-md-2">Sample Name</span>
     <span><input class="form-input col-md-3" id="SampleName" name="sample_name" 
-    oninvalid="this.setCustomValidity('Please input a Sample Name')" required="required" type="text" value="{{ sample_name }}" /></span>
+    type="text" value="{{ sample_name }}" placeholder="Sample Name"/></span>
     <span><input class="form-input col-md-1" data-val="true" data-val-number="The field ClusterDistance must be a number." data-val-required="The ClusterDistance field is required." id="cluster" max="20" min="0" name="distance1" onclick="Validateclusterdistance()" onkeyup="Validateclusterdistance()" size="2" type="number" value="{{ distance_cluster}}" /></span>
     <span><input class="form-input col-md-1" data-val="true" data-val-number="The field SubClusterDistance must be a number." data-val-required="The SubClusterDistance field is required." id="subcluster" max="20" min="0" name="distance2" onclick="Validateclusterdistance()" onkeyup="Validateclusterdistance()" size="2" type="number" value="{{ distance_subcluster}}" /></span>
     <span class="col-md-3"><input type="submit" value="Search Clusters" id="subcluster_submit" class="btn btn-danger" /></span>
