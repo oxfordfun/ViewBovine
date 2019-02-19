@@ -1,0 +1,27 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<h1>Upload Files</h1>
+<p>Upload 'csv' or 'tsv' files to the server.</p>
+<hr>
+<form method=post enctype=multipart/form-data>
+<div class="input-group" styles="margin:10px">
+    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+</div>
+<div>
+    <br>
+</div>
+<div class="input-group" styles="margin:10px">
+    <button id="submitButton" type="submit" class="btn btn-primary">Upload</button>
+</div>
+</form>
+<div>
+    <br>
+</div>
+{% if filename %}
+    <p>{{ filename }} has been successfully uploaded.</p>
+{% else %}
+    <p>Please choose a file to upload.</p>
+{%  endif %}
+{% endblock content %} 

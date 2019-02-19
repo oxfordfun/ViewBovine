@@ -31,7 +31,8 @@
             <li><a href="/samplelist">Sample</a></li>
             <li><a href="/herd">Herd</a></li>
             <li><a href="/cluster">Cluster</a></li>
-            <li><a href="/subcluster">SubCluster</a></li>              
+            <li><a href="/subcluster">SubCluster</a></li>       
+            <li><a href="/upload">Upload</a></li>            
             <li><a href="/about">About</a></li>
 	    <li><a href="/logout">Log off</a></li>
 	  </ul>
@@ -48,7 +49,7 @@
 
       <hr />
       <footer>
-        <p>Version {{ version }}. Developed by Fan&Denis &copy; 2018 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
+        <p>Version {{ version }}. Developed by Fan&Denis &copy; 2019 - Modernising Medical Microbiology, Nuffield Department Medicine, University of Oxford</p>
       </footer>
     </div>
     
