@@ -77,7 +77,7 @@ function addMovement(map_click_x, map_click_y, date, stay) {
     var locations = convert2latlon(map_click_x, map_click_y);
     var lat = locations[0].toFixed(6);
     var lon = locations[1].toFixed(6);
-    var origin_icon_url = "http://collectd.mmmoxford.uk/images/marker-14.png";
+    var origin_icon_url = "https://collectd.mmmoxford.uk/images/marker-14.png";
     var origin_icon = new L.Icon({
         iconUrl: origin_icon_url,
         iconSize: [25, 40],
@@ -123,7 +123,7 @@ function addMarker(sample_name, sample_guid, map_click_x, map_click_y, myIcon, c
             }
         }
         if (map_click_x === map_x && map_click_y === map_y) {
-            var origin_icon_url = "http://collectd.mmmoxford.uk/images/marker-20.png";
+            var origin_icon_url = "https://collectd.mmmoxford.uk/images/marker-20.png";
             var origin_icon = new L.Icon({
                 iconUrl: origin_icon_url,
                 iconSize: [25, 40],
@@ -201,7 +201,7 @@ $('.cluster_tick').click(function () {
     var cluster_no = document.getElementById(cluster_id).innerHTML;
     var mapdata = document.getElementById(element_id).children;
     var random_index = Math.floor(Math.random() * 50) + 10;
-    var random_icon_url = 'http://collectd.mmmoxford.uk/images/marker-' + random_index + '.png';
+    var random_icon_url = 'https://collectd.mmmoxford.uk/images/marker-' + random_index + '.png';
 
     var random_icon = new L.Icon({
         iconUrl: random_icon_url,
