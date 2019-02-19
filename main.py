@@ -4,6 +4,10 @@ import json
 import os
 
 from flask import Flask, render_template, abort, request, redirect
+from flask import flash, url_for
+from werkzeug.utils import secure_filename
+import socket
+import re
 import flask_login
 from ldap3 import Connection
 
@@ -30,7 +34,6 @@ def user_loader(username):
 #for testing in ubuntun: export APP_SETTINGS='config.TestingConfig'
 #for production in ubuntun: export APP_SETTINGS='config.ProductionConfig'
 app.config.from_object(os.environ['APP_SETTINGS'])
-
 version = git_utils.git_describe('.')
 
 @app.context_processor
@@ -49,6 +52,11 @@ def setup_logging():
 
 setup_logging()
 logger = logging.getLogger("fan_logger")
+
+def allowed_file(filename):
+    allowed_extensions = app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 def call_api(kind, path, return_type='json', limit=80):
     if kind == 'tree':
@@ -204,7 +212,7 @@ def sample_neighbour():
     herd_id = data[4]
     eartag = data[7]
 
-    movement_data = dict();
+    movement_data = dict()
     req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
     if req_movement['data']:
         movement_data = req_movement['data'][sample_name]
@@ -333,6 +341,26 @@ def subcluster():
             return render_template('subcluster.template', sample_name = sample_name, distance_cluster = 6, distance_subcluster = 6)
         else:
             return render_template('subcluster.template', distance_cluster = 6, distance_subcluster = 6)
+
+@app.route('/upload', methods=['GET', 'POST'])
+@flask_login.login_required
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template('upload.template', filename = filename)
+    return render_template('upload.template')
 
 @app.route('/about')
 @flask_login.login_required

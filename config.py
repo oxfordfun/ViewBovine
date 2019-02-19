@@ -13,6 +13,8 @@ class DevelopmentConfig(Config):
     APP_PORT = 5080
     TREE_SERVER = 'http://192.168.7.30:5008'
     MAP_SERVER = 'http://192.168.7.30:5007'
+    UPLOAD_FOLDER = 'D:\\tmp\\uploads'
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
 
 
 class TestingConfig(Config):
