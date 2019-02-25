@@ -219,9 +219,10 @@ def sample_neighbour():
 
     if my_distance and my_quality:
         cohab = call_api('map', '/api/locations_cohabit_filter/{0}/{1}'.format(sample_name, my_distance), limit=2000)['data']
-        for k in cohab:
-            cohab_figures[k] = call_api('map', '/api/locations_cohabit_filter_figure/{0}/{1}/{2}'.format(
-                sample_name, my_distance, k), return_type='text', limit=2000)
+        if cohab:
+            for k in cohab:
+                cohab_figures[k] = call_api('map', '/api/locations_cohabit_filter_figure/{0}/{1}/{2}'.format(
+                    sample_name, my_distance, k), return_type='text', limit=2000)
 
         # [neighbour, distance]
         query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
@@ -287,7 +288,7 @@ def herd():
     cph = list()
     import math
     if herd_id != None:
-        if len(herd_id) == 11: #Search CPHH
+        if herd_id and (len(herd_id) == 11 or len(herd_id) != 9): #Search CPHH
             herd_matrix = call_api('map', '/herdmatrix/{0}'.format(herd_id))
             n = math.sqrt(len(herd_matrix))
             cph = [[herd_id, herd_matrix, int(n)]]

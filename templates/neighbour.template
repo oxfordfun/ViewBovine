@@ -70,6 +70,7 @@
     </p>
     <h3>Co-habitation Record</h3>
     <hr />
+    {% if cohab %}
     {% for k,vs in cohab.items() %}
     <h4>{{ k|replace('_', ' ') }}</h4>
     <a class="btn-link pull-right" id="show{{ k }}" onclick="Show_cohabit_detail(show{{ k }});">Show Detail</a>
@@ -83,6 +84,7 @@
       {% endfor %}
     </div>
     {% endfor %}
+    {% endif %}
   </div><!--End of map/co-hab column (right)-->
 </div><!--End of Row-->
 {% endblock maincontent %}

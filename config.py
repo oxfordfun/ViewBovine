@@ -13,7 +13,7 @@ class DevelopmentConfig(Config):
     APP_PORT = 5080
     TREE_SERVER = 'http://192.168.7.30:5008'
     MAP_SERVER = 'http://192.168.7.30:5007'
-    UPLOAD_FOLDER = 'D:\\tmp\\uploads'
+    UPLOAD_FOLDER = '/tmp/uploads'
     ALLOWED_EXTENSIONS = set(['csv','tsv'])    
 
 
@@ -24,6 +24,8 @@ class TestingConfig(Config):
     APP_PORT = 5080
     TREE_SERVER = 'http://127..0.0.1:5008'
     MAP_SERVER = 'http://127.0.0.1:5006'
+    UPLOAD_FOLDER = '/tmp/uploads'
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
 
 
 class ProductionConfig(Config):
@@ -33,3 +35,5 @@ class ProductionConfig(Config):
     APP_PORT = 5080
     TREE_SERVER = 'http://192.168.7.30:5008'
     MAP_SERVER = 'http://192.168.7.30:5006'
+    UPLOAD_FOLDER = '/tmp/uploads'
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
