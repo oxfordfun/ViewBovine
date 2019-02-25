@@ -32,10 +32,9 @@
             <li><a href="/sample">Search</a></li>
             <li><a href="/samplelist">Sample</a></li>
             <li><a href="/herd">Herd</a></li>
+            <li><a href="/treelist">Phylogeny</a></li>  
             <li><a href="/cluster">Cluster</a></li>
-            <li><a href="/subcluster">SubCluster</a></li>
-            <li><a href="/treelist">Trees</a></li>           
-            <li><a href="/tree">Phylogeny</a></li>       
+            <li><a href="/subcluster">SubCluster</a></li>             
             <li><a href="/about">About</a></li>         
 	        </ul>
           <ul class="nav navbar-nav pull-right">

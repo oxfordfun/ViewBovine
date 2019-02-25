@@ -33,12 +33,12 @@
             <td>{{ seconds | duration }}</td>
             <td>
                 <div>
-                    <form action="#">
+                   <form action="/tree">
                         <span>
-                            <input type="text" , class="form-input hidden alert-link" name="tree_id" id="tree_id" value="{{ tree[0] }}" />
-                            <input type="submit" value="Tree" id="tree_search" class="btn-link" />
+                            <input type="text" , class="form-input hidden alert-link" name="sample_guids" id="sample_guids" value="{{ tree[0] }}" />
+                            <input type="submit" value="View Tree" id="tree_search" class="btn-link" />
                         </span>
-                    </form>     
+                    </form>      
                 </div>     
             </td>
         </tr>

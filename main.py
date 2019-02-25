@@ -83,10 +83,8 @@ def call_api(kind, path, return_type='json', limit=80):
             ret = req_api.json()
             return ret
         except Exception as e:
-            abort(500, description="couldn't parse api response to {0} as json: {1}".format(host + path, req_api.text))
-
-    else:
-        return req_api.text
+            return req_api.text
+        
 
 import datetime
 def epochtotime(value, format ='%Y-%m-%d %H:%M:%S'):
@@ -383,7 +381,8 @@ def upload_file():
 @app.route('/tree', methods=['GET', 'POST'])
 @flask_login.login_required
 def view_tree():
-    tree_nwk = "(UK161542602006:1,((UK166574704525:1,(UK174807200420:1,UK160742708079:1):1):1,UK161135202980:1):1,(((((UK161135202980_v0:1,(((((UK723962101997:1,(UK701743201079:1,UK306073402442:1):1):11,((UK304498300215:13,(UK705810600866:11,UK304534500835:13):1):1,((_TB1243:1,_TB1243_v0:1):25,(((UK304701301412:1,UK705780701801:13):1,UK304611102987:1):1,UK304602700672:13):11):1):1):11,((UK162250501475:1,UK160736303303:1):24,(UK700032201332:11,_AFT-16-01359-13:7):12):2):1,((((((_TB1027:1,_TB1027_v0:1):1,(_21-M0125-03-16:1,_21-M0125:1):1):11,UK705479400251:1):1,(UK705481400171:1,UK705481400171_v0:1):1):2,((UK743705500873:1,UK304402500284:1):12,UK304402300128:11):12):1,((UK707077602392:1,(UK707154700258:1,(UK313112500799:1,UK313112500799_v0:1):1):1):1,(_AFT-16-01302-13:1,_AFT-16-01302-13_v0:1):1):25):13):1,(((UK221311200741:1,UK221311200741_v0:1):1,UK305947701745:1):1,(UK305947701745_v0:1,UK705113600438:1):1):11):2):1,((UK202628300280:1,UK202628300280_v0:1):11,(UK312864700221:1,UK305510700927:13):1):11):2,UK166574604587:1):1,UK166574204618:1):1,UK161542602006_v0:1):1):0;"
+    sample_guids = request.args.get('sample_guids')
+    tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))    
     return render_template('tree.template',
            tree_nwk = tree_nwk )
 
