@@ -8,7 +8,7 @@ def git_describe(directory):
     '''
     old = os.getcwd()
     os.chdir(directory)
-    cmd = "git describe --tags --always --dirty --match \"[0-9A-Z]*.[0-9A-Z]*\""
+    cmd = "git describe --tags --always --dirty"
     version = subprocess.check_output(shlex.split(cmd)).decode('utf-8').strip()
     os.chdir(old)
     return version
