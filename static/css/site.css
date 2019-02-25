@@ -31,8 +31,13 @@ input{
     background-color: indigo;
 }
 
-textarea, table {
+textarea {
     max-width: 1000px;
+    font-size:12px;
+}
+
+table {
+    max-width: 100%;
     font-size:12px;
 }
 
@@ -106,4 +111,11 @@ a {
 }
 .matrix-diagonal {
     background-color: lightgrey
+}
+
+#sample_id_tree {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 1px;
 }

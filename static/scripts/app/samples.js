@@ -3,6 +3,8 @@
     $("#sample_table").tablesorter({ sortList: [[0, 0], [1, 0]] });
     $("#list_table").tablesorter();
     $("#list_table").tablesorter({ sortList: [[0, 0], [1, 0]] });
+    $("#tree_table").tablesorter();
+    $("#tree_table").tablesorter({ sortList: [[0, 0], [1, 0]] });
 
 });
 

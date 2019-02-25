@@ -1,0 +1,53 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<h2>Phylogeny Tree Server</h2>
+<div class="form-group form-inline">
+    <label for="promt">{{ tree_list | length}} Phylogeny Trees</label>
+</div>
+
+<table class="table table-striped tablesorter" id="tree_table">
+    <thead>
+        <tr>
+            <th scope="col"><a href="#">#</a></th>
+            <th scope="col"><a href="#">SNPs</a></th>
+            <th scope="col"><a href="#">Sample GUID</a></th>
+            <th scope="col"><a href="#">Nodes</a></th>
+            <th scope="col"><a href="#">Started</a></th>
+            <th scope="col"><a href="#">Duration</a></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for tree in tree_list %}
+        {% set start_time = tree[6] | int  %}
+        {% set end_time = tree[7] | int  %}
+        {% set seconds = (end_time - start_time)  %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ tree[2] }}</td>
+            <td id="sample_id_tree">{{ tree[0] }}</td>
+            <th scope="col">{{ tree[0].split(',') | length }}</th>
+            <td>{{ start_time | datetime }}</td>
+            <td>{{ seconds | duration }}</td>
+            <td>
+                <div>
+                    <form action="#">
+                        <span>
+                            <input type="text" , class="form-input hidden alert-link" name="tree_id" id="tree_id" value="{{ tree[0] }}" />
+                            <input type="submit" value="Tree" id="tree_search" class="btn-link" />
+                        </span>
+                    </form>     
+                </div>     
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock content %}
+
+{% block scripts %}
+<script src="/static/scripts/jquery.tablesorter.js"></script>
+<script src="/static/scripts/app/samples.js"></script>
+{% endblock scripts %}

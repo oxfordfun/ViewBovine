@@ -88,6 +88,16 @@ def call_api(kind, path, return_type='json', limit=80):
     else:
         return req_api.text
 
+import datetime
+def epochtotime(value, format ='%Y-%m-%d %H:%M:%S'):
+    return datetime.datetime.fromtimestamp(value).strftime(format)
+app.jinja_env.filters['datetime'] = epochtotime 
+
+import time
+def secondstotimestamp(value):
+    return time.strftime('%H:%M:%S', time.gmtime(value))
+app.jinja_env.filters['duration'] = secondstotimestamp 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -281,6 +291,12 @@ def samplelist():
     sample_list = call_api('map', '/api/coordinates')
     return render_template('samplelist.template', sample_list=sample_list)
 
+@app.route('/treelist')
+@flask_login.login_required
+def treeserver():
+    tree_list = call_api('tree', '/complete')
+    return render_template('treelist.template', tree_list=tree_list)
+
 @app.route('/herd')
 @flask_login.login_required
 def herd():
@@ -304,6 +320,7 @@ import functools
 @functools.lru_cache(maxsize=None)
 def lookup(names):
     return call_api('map', '/coordinates2/{0}'.format(names))
+
 
 def get_cluster_data(clusters_list):
     clusters = list()
