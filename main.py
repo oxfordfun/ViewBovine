@@ -93,7 +93,7 @@ app.jinja_env.filters['datetime'] = epochtotime
 
 import time
 def secondstotimestamp(value):
-    return time.strftime('%H:%M:%S', time.gmtime(value))
+    return f"{value//(3600)%3600}h {value//60%60}m {value%60}s"
 app.jinja_env.filters['duration'] = secondstotimestamp 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -382,7 +382,16 @@ def upload_file():
 @flask_login.login_required
 def view_tree():
     sample_guids = request.args.get('sample_guids')
-    tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))    
+    get_tree_for_sample = request.args.get('get_tree_for_sample')
+    if get_tree_for_sample:
+        tree_nwk = call_api('tree','/trees_with_sample/{0}'.format(sample_guids))
+        if tree_nwk:
+            tree_nwk = tree_nwk[0]
+        else:
+            tree_nwk = ""
+
+    else:
+        tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))    
     return render_template('tree.template',
            tree_nwk = tree_nwk )
 

@@ -119,3 +119,7 @@ a {
     overflow: hidden;
     max-width: 1px;
 }
+
+a.btn-warning.btn {
+    background-color: indigo;
+}

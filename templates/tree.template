@@ -2,6 +2,7 @@
 
 {% block content %}
 <h2>Phylogeny Tree <span id="current_tree"></span></h2>
+{% if tree_nwk %}
     <textarea readonly name="textarea" placeholder="Paste a tree here in nwk format, then select Linear or Radial to display." id="nwk_tree" rows="5" cols="150"> {{ tree_nwk }} </textarea>
     <hr />
 <div class='container' id="main_display">
@@ -38,7 +39,12 @@
         </div>
     </div>
 </div>
-
+{% else %}
+<h3>No tree for this sample found</h3>
+<p>This could be because:</p>
+<p>the cluster the sample belongs to has fewer than 3 samples, or</p>
+<p>We do not have the sequence in our database</p>
+{% endif %}
 {% endblock content %}
 
 {% block scripts %}
