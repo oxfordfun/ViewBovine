@@ -28,17 +28,12 @@
             <td>{{ loop.index }}</td>
             <td>{{ tree[2] }}</td>
             <td id="sample_id_tree">{{ tree[0] }}</td>
-            <th scope="col">{{ tree[0].split(',') | length }}</th>
+            <th scope="col">{{ tree[8] }}</th>
             <td>{{ start_time | datetime }}</td>
             <td>{{ seconds | duration }}</td>
             <td>
                 <div>
-                   <form action="/tree">
-                        <span>
-                            <input type="text" , class="form-input hidden alert-link" name="sample_guids" id="sample_guids" value="{{ tree[0] }}" />
-                            <input type="submit" value="View Tree" id="tree_search" class="btn-link" />
-                        </span>
-                    </form>      
+                    <a class="btn-warning btn" href="/tree?sample_guids={{ tree[0] }}&get_tree_for_sample=true">Phylogeny Tree</a>     
                 </div>     
             </td>
         </tr>
