@@ -33,7 +33,7 @@
             <td>{{ seconds | duration }}</td>
             <td>
                 <div>
-                    <a class="btn-warning btn" href="/tree?sample_guids={{ tree[0] }}&get_tree_for_sample=true">Phylogeny Tree</a>     
+                    <a href="/tree?sample_guids={{ tree[0] }}&get_tree_for_sample=true">View Tree</a>     
                 </div>     
             </td>
         </tr>
