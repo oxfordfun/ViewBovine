@@ -233,8 +233,8 @@ def sample_neighbour():
                     sample_name, my_distance, k), return_type='text', limit=2000)
 
         # [neighbour, distance]
-        query_fmt = "/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
-        neighbours = call_api('tree', query_fmt.format(my_guid, my_distance, my_quality))
+        query_fmt = "/api/neighbours2/{0}?distance={1}&quality=0.{2}&reference=R00000039"
+        neighbours = call_api('map', query_fmt.format(my_guid, my_distance, my_quality))
 
 
         # get sample names
@@ -402,4 +402,4 @@ def about():
 
 if __name__ == "__main__":
     app_port = app.config['APP_PORT']
-    app.run(host='0.0.0.0', port=app_port)
+    app.run(host='127.0.0.1', port=app_port)

@@ -14,7 +14,7 @@ class DevelopmentConfig(Config):
     TREE_SERVER = 'http://192.168.7.30:5008'
     MAP_SERVER = 'http://192.168.7.30:5007'
     UPLOAD_FOLDER = '/tmp/uploads'
-    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])
 
 
 class TestingConfig(Config):
@@ -22,10 +22,10 @@ class TestingConfig(Config):
     DEBUG = False
     AUTH = False
     APP_PORT = 5080
-    TREE_SERVER = 'http://127..0.0.1:5008'
+    TREE_SERVER = 'http://127.0.0.1:5008'
     MAP_SERVER = 'http://127.0.0.1:5006'
     UPLOAD_FOLDER = '/tmp/uploads'
-    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])
 
 
 class ProductionConfig(Config):
@@ -36,4 +36,14 @@ class ProductionConfig(Config):
     TREE_SERVER = 'http://192.168.7.30:5008'
     MAP_SERVER = 'http://192.168.7.30:5007'
     UPLOAD_FOLDER = '/tmp/uploads'
-    ALLOWED_EXTENSIONS = set(['csv','tsv'])    
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])
+
+class SwanseaProductionConfig(Config):
+    DEBUG = False
+    TESTING = False
+    AUTH = True
+    APP_PORT = 5080
+    TREE_SERVER = 'http://127.0.0.1:5008'
+    MAP_SERVER = 'http://127.0.0.1:5007'
+    UPLOAD_FOLDER = '/tmp/uploads'
+    ALLOWED_EXTENSIONS = set(['csv','tsv'])
