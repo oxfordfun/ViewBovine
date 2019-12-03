@@ -84,6 +84,8 @@ def call_api(kind, path, return_type='json', limit=80):
             return ret
         except Exception as e:
             return req_api.text
+    else:
+        return req_api.text
         
 
 import datetime
