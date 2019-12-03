@@ -398,7 +398,6 @@ def view_tree():
            tree_nwk = tree_nwk )
 
 @app.route('/about')
-@flask_login.login_required
 def about():
     return render_template('about.template')
 
