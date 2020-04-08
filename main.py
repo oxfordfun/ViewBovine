@@ -365,20 +365,21 @@ def subcluster():
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
-        if 'file' not in request.files:
+        if 'files[]' not in request.files:
             flash('No file part')
             return redirect(request.url)
-        file = request.files['file']
+        files = request.files.getlist('files[]')
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('upload.template', filename = filename)
-    return render_template('upload.template')
+        for file in files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                flash(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('File(s) successfully uploaded')
+        return render_template('upload.template')
+    else:
+        return render_template('upload.template')
 
 @app.route('/tree', methods=['GET', 'POST'])
 @flask_login.login_required

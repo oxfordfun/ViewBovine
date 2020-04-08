@@ -5,23 +5,28 @@
 <h1>Upload Files</h1>
 <p>Upload 'csv' or 'tsv' files to the server.</p>
 <hr>
-<form method=post enctype=multipart/form-data>
-<div class="input-group" styles="margin:10px">
-    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-</div>
-<div>
-    <br>
-</div>
-<div class="input-group" styles="margin:10px">
-    <button id="submitButton" type="submit" class="btn btn-danger">Upload</button>
-</div>
+<h2>Select file(s) to upload</h2>
+
+<p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</p>
+
+<form method="post" action="/upload" enctype="multipart/form-data">
+    <dl>
+        <p>
+            <input type="file" name="files[]" multiple="true" autocomplete="off" required> 
+        </p>
+    </dl>
+    <p>
+        <input type="submit" value="Submit">	
+    </p>
 </form>
-<div>
-    <br>
-</div>
-{% if filename %}
-    <p>{{ filename }} has been successfully uploaded.</p>
-{% else %}
-    <p>Please choose a file to upload.</p>
-{%  endif %}
 {% endblock content %} 
