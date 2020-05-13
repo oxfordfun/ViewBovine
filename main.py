@@ -214,6 +214,11 @@ def sample_neighbour():
     if not guid_name_map:
         abort(500, description='Couldn\'t find data for sample oxford id: \'{0}\'.'.format(my_guid))
 
+    score_dict = call_api('map', '/api/interesting_related_samples/{0}'.format(my_guid))
+    
+    if not score_dict:
+         abort(500, description='Couldn\'t find scores for sample oxford id: \'{0}\'.'.format(my_guid))
+
     sample_name = guid_name_map[0][1]
     data = call_api('map', '/coordinates2/{0}'.format(sample_name))[0]
 
@@ -277,6 +282,7 @@ def sample_neighbour():
                            sample_name = sample_name,
                            neighbours = tbl,
                            neighbours_dict = neighbours_dict,
+                           score_dict = score_dict,
                            cohab = cohab,
                            cohab_figures = cohab_figures,
                            title = 'Genetic Related Samples',

@@ -35,6 +35,7 @@
 	  <th>Name</th>
 	  <th><a href="#">Map </a></th>
 	  <th><a href="#">Distance</a></th>
+    <th><a href='#'>I-Score</a></th>
 	  <th><input type="checkbox"  id="check_all" onclick="check_all();" /></th>
 	</tr>
       </thead>
@@ -51,6 +52,7 @@
 	      <span id='name_{{ neighbour[0] }}' class="hidden">{{ neighbour[0] }}</span></form></td>
 	  <td><div id="mapx_{{ neighbour[0] }}">{{ neighbour[2] }}</div><div id="mapy_{{ neighbour[0] }}">{{ neighbour[3] }}</div></td>
 	  <td><span id="distance_{{ neighbour[0] }}">{{ neighbours_dict[neighbour[0]] }}</span></td>
+    <td>{{ score_dict[neighbour[0]] }}</td>
 	  <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
 	</tr>
 	{% endfor %}
