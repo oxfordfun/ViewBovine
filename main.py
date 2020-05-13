@@ -199,6 +199,10 @@ def sample_neighbour():
     my_distance = request.args.get('distance')
     my_quality = request.args.get('quality')
 
+    search_distance = 6
+    if my_distance:
+        search_distance = my_distance
+
     neighbours_dict = dict()
     tbl = list()
     cohab = dict()
@@ -215,7 +219,6 @@ def sample_neighbour():
         abort(500, description='Couldn\'t find data for sample oxford id: \'{0}\'.'.format(my_guid))
 
     score_dict = call_api('map', '/api/interesting_related_samples/{0}'.format(my_guid))
-    
     if not score_dict:
          abort(500, description='Couldn\'t find scores for sample oxford id: \'{0}\'.'.format(my_guid))
 
@@ -228,6 +231,7 @@ def sample_neighbour():
     eartag = data[7]
 
     movement_data = dict()
+    neighbours_guids_map = dict()
     req_movement = call_api('map', '/api/locations/{0}'.format(sample_name))
     if req_movement['data']:
         movement_data = req_movement['data'][sample_name]
@@ -249,6 +253,7 @@ def sample_neighbour():
             neighbour_guids = [x[0] for x in neighbours]
             neighbour_guids = ",".join(neighbour_guids)
             neighbour_guids_names = call_api('map', '/api/lookup/{0}'.format(neighbour_guids))
+            neighbours_guids_map = { x[1]:x[0] for x in neighbour_guids_names }
 
             # build dict name -> distance
             for guid,name in neighbour_guids_names:
@@ -280,8 +285,10 @@ def sample_neighbour():
                            herd_id = herd_id,
                            sample_guid = my_guid,
                            sample_name = sample_name,
+                           search_distance = search_distance,
                            neighbours = tbl,
                            neighbours_dict = neighbours_dict,
+                           neighbours_guids_map = neighbours_guids_map,
                            score_dict = score_dict,
                            cohab = cohab,
                            cohab_figures = cohab_figures,
