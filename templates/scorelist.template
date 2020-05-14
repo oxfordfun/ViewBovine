@@ -1,9 +1,10 @@
+
 {% extends "base.template" %}
 
 {% block content %}
 
 <h2>Top 1000 I-Score Sample Pairs</h2>
-<p>I-score is short for Interesting Score. We dive into all the samples (>8000),looking for sample pairs, which are far apart in Miles but close in SNPs. </p>  
+<p>I-score is short for Interesting Score. We dive into all the samples (>8000), looking for sample pairs, which are far apart in Miles but close in SNPs. </p>  
 {% if score_list | length > 0 %}
 <table class="table table-striped tablesorter" id="list_table">
     <thead>
