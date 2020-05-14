@@ -1,0 +1,44 @@
+{% extends "base.template" %}
+
+{% block content %}
+
+<h2>Top 1000 I-Score Sample Pairs</h2>
+<p>I-score is short for Interesting Score. We dive into all the samples (>8000),looking for sample pairs, which are far apart in Miles but close in SNPs. </p>  
+{% if score_list | length > 0 %}
+<table class="table table-striped tablesorter" id="list_table">
+    <thead>
+        <tr>
+            <th><a href="#">#</a></th>
+            <th><a href="#">Sample A </a></th>
+            <th><a href="#">Sample B </a></th>
+            <th><a href="#">I-Score</a></th>
+            <th><a href="#">Miles </a></th>
+            <th><a href="#">SNP</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in score_list %}
+       <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2]|round(2) }}</td>
+            <td>{{ (row[3] / 1.60934) |round |int }}</td>
+            <td>{{ row[4] }}</td>
+            <td>
+                <div>
+                   <a href="/sample/neighbour/?sample_guid={{ row[0]  }}&quality=80&distance={{ row[4]  }}">Show Detail</a>     
+                </div>          
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endif %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="/static/scripts/jquery.tablesorter.js"></script>
+<script src="/static/scripts/app/samples.js"></script>
+{% endblock scripts %}

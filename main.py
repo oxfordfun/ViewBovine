@@ -304,6 +304,12 @@ def samplelist():
     sample_list = call_api('map', '/api/coordinates')
     return render_template('samplelist.template', sample_list=sample_list)
 
+@app.route('/scorelist')
+@flask_login.login_required
+def scorelist():
+    score_list = call_api('map', '/api/sorted_interesting_related_cases/1000')
+    return render_template('scorelist.template', score_list=score_list)
+
 @app.route('/treelist')
 @flask_login.login_required
 def treeserver():

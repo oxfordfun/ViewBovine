@@ -31,6 +31,7 @@
           <ul class="nav navbar-nav">
             <li><a href="/sample">Search</a></li>
             <li><a href="/samplelist">Sample</a></li>
+	    <li><a href="/scorelist">I-Score</a></li>
             <li><a href="/herd">Herd</a></li>
             <li><a href="/treelist">Phylogeny</a></li>  
             <li><a href="/cluster">Cluster</a></li>
