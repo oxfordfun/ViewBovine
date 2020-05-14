@@ -307,8 +307,29 @@ def samplelist():
 @app.route('/scorelist')
 @flask_login.login_required
 def scorelist():
-    score_list = call_api('map', '/api/sorted_interesting_related_cases/1000')
-    return render_template('scorelist.template', score_list=score_list)
+    score_list1 = call_api('map', '/api/sorted_interesting_related_cases/2000')
+    seen_pairs = set()
+    score_list = list()
+    for row in score_list1:
+        pair1 = row[0] + row[1]
+        pair2 = row[1] + row[0]
+        if pair1 not in seen_pairs and pair2 not in seen_pairs:
+            score_list.append(row)
+            seen_pairs.add(pair1)
+    
+    guids_list1 = set([score[0] for score in score_list])
+    guids_list2 = set([score[1] for score in score_list])
+
+    guids_all =  list(guids_list1.union(guids_list2))
+
+    guids_all_str = ','.join(guids_all)
+    lookup_list = call_api('map', '/api/lookup/{0}'.format(guids_all_str))
+    
+    guid_to_name = { x[0]:x[1] for x in lookup_list }
+
+    return render_template('scorelist.template',
+                           score_list=score_list,
+                           guid_to_name = guid_to_name)
 
 @app.route('/treelist')
 @flask_login.login_required
