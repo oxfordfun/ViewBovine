@@ -51,7 +51,7 @@
 	      <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ neighbour[0] }}" />
 	      <input type="submit" value="{{ neighbour[0] }}" id="sample_search" class="btn-link" />
 	      <span id='name_{{ neighbour[0] }}' class="hidden">{{ neighbour[0] }}</span></form></td>
-	  <td>{{ (score_dict[neighbours_guids_map[neighbour[0]]][1] / 1.60934)|round|int }}</td>
+	  <td>{{ (score_dict[neighbours_guids_map[neighbour[0]]][1] / 1.60934)|round(2) }}</td>
 	  <td><span id="distance_{{ neighbour[0] }}">{{ neighbours_dict[neighbour[0]] }}</span></td>
 	  <td>{{ score_dict[neighbours_guids_map[neighbour[0]]][0]|round(2) }}</td>
 	  <td><input type="checkbox" class="sample_tick" id='{{ neighbour[0] }}'/></td>
