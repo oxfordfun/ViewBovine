@@ -16,6 +16,7 @@
             <th><a href="#">Ear Tag </a></th>
             <th><a href="#">Name</a></th>
             <th><a href="#">Reference Year </a></th>
+            <th><a href="#">Quality</a></th>
             <th><a href="#">Test Date</a></th>
             <th></th>
         </tr>
@@ -29,6 +30,7 @@
             <td>{{ sample[7] }}</td>
             <td>{{ sample[0] }}</td>
             <td>{{ sample[6] }}</td>
+	    <td>{{ quality_map[sample[0]] }}</td>
             <td>{{ date }}</td>
             <td>
                 <div>

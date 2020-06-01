@@ -2,6 +2,7 @@ import logging
 import requests
 import json
 import os
+import collections
 
 from flask import Flask, render_template, abort, request, redirect
 from flask import flash, url_for
@@ -53,6 +54,17 @@ def setup_logging():
 setup_logging()
 logger = logging.getLogger("fan_logger")
 
+quality_map = collections.defaultdict(int) # sample name to p value
+
+def make_quality_map():
+    with open('../data/sample_quality.csv') as f:
+        lines = f.readlines()
+    for line in lines[1:]:
+        elems = line.strip().split(',')
+        quality_map[elems[0].strip()] = elems[2].strip()
+
+make_quality_map()
+
 def allowed_file(filename):
     allowed_extensions = app.config['ALLOWED_EXTENSIONS']
     return '.' in filename and \
@@ -86,17 +98,17 @@ def call_api(kind, path, return_type='json', limit=80):
             return req_api.text
     else:
         return req_api.text
-        
+
 
 import datetime
 def epochtotime(value, format ='%Y-%m-%d %H:%M:%S'):
     return datetime.datetime.fromtimestamp(value).strftime(format)
-app.jinja_env.filters['datetime'] = epochtotime 
+app.jinja_env.filters['datetime'] = epochtotime
 
 import time
 def secondstotimestamp(value):
     return f"{value//(3600)%3600}h {value//60%60}m {value%60}s"
-app.jinja_env.filters['duration'] = secondstotimestamp 
+app.jinja_env.filters['duration'] = secondstotimestamp
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -302,7 +314,7 @@ def sample_neighbour():
 @flask_login.login_required
 def samplelist():
     sample_list = call_api('map', '/api/coordinates')
-    return render_template('samplelist.template', sample_list=sample_list)
+    return render_template('samplelist.template', sample_list=sample_list, quality_map=quality_map)
 
 @app.route('/scorelist')
 @flask_login.login_required
@@ -316,7 +328,7 @@ def scorelist():
         if pair1 not in seen_pairs and pair2 not in seen_pairs:
             score_list.append(row)
             seen_pairs.add(pair1)
-    
+
     guids_list1 = set([score[0] for score in score_list])
     guids_list2 = set([score[1] for score in score_list])
 
@@ -324,7 +336,7 @@ def scorelist():
 
     guids_all_str = ','.join(guids_all)
     lookup_list = call_api('map', '/api/lookup/{0}'.format(guids_all_str))
-    
+
     guid_to_name = { x[0]:x[1] for x in lookup_list }
 
     return render_template('scorelist.template',
@@ -435,7 +447,7 @@ def view_tree():
                 tree_nwk = tree
 
     else:
-        tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))    
+        tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))
     return render_template('tree.template',
            tree_nwk = tree_nwk )
 
