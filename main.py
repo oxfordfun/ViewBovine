@@ -427,11 +427,12 @@ def view_tree():
     sample_guids = request.args.get('sample_guids')
     get_tree_for_sample = request.args.get('get_tree_for_sample')
     if get_tree_for_sample:
-        tree_nwk = call_api('tree','/trees_with_sample/{0}'.format(sample_guids))
-        if tree_nwk:
-            tree_nwk = tree_nwk[0]
-        else:
-            tree_nwk = ""
+        trees_nwk = call_api('tree','/trees_with_sample/{0}'.format(sample_guids))
+
+        tree_nwk = ""
+        for tree in trees_nwk:
+            if len(tree) > len(tree_nwk):
+                tree_nwk = tree
 
     else:
         tree_nwk = call_api('tree','/tree/{0}?reference={1}&distance={2}&quality={3}'.format(sample_guids, 'R00000039', 3, '0.80'))    
