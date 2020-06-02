@@ -14,8 +14,9 @@
             <th><a href="#">#</a></th>
             <th><a href="#">Herd </a></th>
             <th><a href="#">Ear Tag </a></th>
+	    <th><a href="#">Oxford ID </a></th>
             <th><a href="#">Name</a></th>
-            <th><a href="#">Reference Year </a></th>
+            <th><a href="#">Year </a></th>
             <th><a href="#">Quality</a></th>
             <th><a href="#">Test Date</a></th>
             <th></th>
@@ -28,6 +29,7 @@
             <td>{{ loop.index }}</td>
             <td>{{ sample[4] }}</td>
             <td>{{ sample[7] }}</td>
+	    <td>{{ sample[8] }}</td>
             <td>{{ sample[0] }}</td>
             <td>{{ sample[6] }}</td>
 	    <td>{{ quality_map[sample[0]] }}</td>
