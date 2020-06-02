@@ -16,7 +16,7 @@ $('#search_apha_sample').keyup(function () {
         if (!index) return;
         var herd = $(this).find("td").eq(1).text().toLowerCase();
         var eartag = $(this).find("td").eq(2).text().toLowerCase();
-        var name = $(this).find("td").eq(3).text().toLowerCase();
+        var name = $(this).find("td").eq(4).text().toLowerCase();
         if (herd.indexOf(searchStr) !== -1 || eartag.indexOf(searchStr) !== -1 || name.indexOf(searchStr) !== -1) {
             $(this).toggle(true);
             total++;
