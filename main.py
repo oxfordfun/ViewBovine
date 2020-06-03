@@ -59,7 +59,7 @@ quality_map = collections.defaultdict(int) # sample name to p value
 def make_quality_map():
     with open('../data/sample_quality.csv') as f:
         lines = f.readlines()
-    for line in lines[1:]:
+    for line in lines:
         elems = line.strip().split(',')
         quality_map[elems[1].strip()] = elems[2].strip()
 
