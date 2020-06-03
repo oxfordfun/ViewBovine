@@ -61,7 +61,7 @@ def make_quality_map():
         lines = f.readlines()
     for line in lines[1:]:
         elems = line.strip().split(',')
-        quality_map[elems[0].strip()] = elems[2].strip()
+        quality_map[elems[1].strip()] = elems[2].strip()
 
 make_quality_map()
 
