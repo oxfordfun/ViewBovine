@@ -32,7 +32,7 @@
 	    <td>{{ sample[8] }}</td>
             <td>{{ sample[0] }}</td>
             <td>{{ sample[6] }}</td>
-	    <td>{{ quality_map[sample[8]] }}</td>
+	    <td>{{ sample[9] }}</td>
             <td>{{ date }}</td>
             <td>
                 <div>

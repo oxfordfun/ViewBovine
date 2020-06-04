@@ -314,7 +314,7 @@ def sample_neighbour():
 @flask_login.login_required
 def samplelist():
     sample_list = call_api('map', '/api/coordinates')
-    return render_template('samplelist.template', sample_list=sample_list, quality_map=quality_map)
+    return render_template('samplelist.template', sample_list=sample_list)
 
 @app.route('/scorelist')
 @flask_login.login_required
