@@ -17,7 +17,8 @@
 	    <th><a href="#">Oxford ID </a></th>
             <th><a href="#">Name</a></th>
             <th><a href="#">Year </a></th>
-            <th><a href="#">Quality</a></th>
+            <th><a href="#">ACGT</a></th>
+	    <th><a href="#">MTB</a></th>
             <th><a href="#">Test Date</a></th>
             <th></th>
         </tr>
@@ -33,6 +34,7 @@
             <td>{{ sample[0] }}</td>
             <td>{{ sample[6] }}</td>
 	    <td>{{ sample[9] }}</td>
+	    <td>{{ sample[10] }}</td>
             <td>{{ date }}</td>
             <td>
                 <div>
