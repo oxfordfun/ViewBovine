@@ -24,11 +24,11 @@ else {
     mymap = L.map('mapid').setView([53.25, -2.5], 6);
 }
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWlzc3NvZnQiLCJhIjoiY2pnNjh1dGtvMnE2aTJ6bzZkeTRnam9saCJ9.gxCPunx5Hdk2_CSTRU_N0A', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Imagery © <a href="http://mapbox.com">Mapbox</a>',
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib3hmb3JkZnVuIiwiYSI6ImNrZ2o1cWFoYzBhYTAycG5mNGYzeTRyY3gifQ.5qaaMqZPWuUclux4JN8LgA', {
     maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'your.mapbox.access.token'
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+    'Imagery  <a href="https://www.mapbox.com/">Mapbox</a>',   
+    id: 'mapbox/streets-v11',
 }).addTo(mymap);
 
 
