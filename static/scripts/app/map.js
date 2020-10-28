@@ -18,10 +18,10 @@ if (targetsample_x !== null && targetsample_y !== null
     map_x = parseInt(targetsample_x.innerHTML);
     map_y = parseInt(targetsample_y.innerHTML);
     var locations = convert2latlon(map_x, map_y);
-    mymap = L.map('mapid').setView([locations[0], locations[1]], 8);
+    mymap = L.map('mapid').setView([locations[0], locations[1]], 10);
 }
 else {
-    mymap = L.map('mapid').setView([53.25, -2.5], 6);
+    mymap = L.map('mapid').setView([53.25, -2.5], 8);
 }
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib3hmb3JkZnVuIiwiYSI6ImNrZ2o1cWFoYzBhYTAycG5mNGYzeTRyY3gifQ.5qaaMqZPWuUclux4JN8LgA', {
