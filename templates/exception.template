@@ -1,0 +1,8 @@
+{% extends "base.template" %}
+
+{% block content %}
+<h2 class='text-danger'>Exceptions</h2>
+<h4>Something unexpected happened! Please try later.</h4>
+<h4 class='text-danger'>{{ error }}</h4>
+{% endblock content %}
+

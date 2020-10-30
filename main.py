@@ -14,6 +14,8 @@ from ldap3 import Connection
 
 import git_utils
 
+import functools
+
 app = Flask(__name__)
 app.secret_key = 'secret key'
 
@@ -75,6 +77,8 @@ def call_api(kind, path, return_type='json', limit=80):
         host = app.config['TREE_SERVER']
     elif kind == 'map':
         host = app.config['MAP_SERVER']
+    elif kind == 'quality':
+        host = app.config['QUALITY_SERVER']
     else:
         abort(500, description="unknown api host: {0}".format(kind))
 
@@ -158,6 +162,25 @@ def sample():
     last_updates = call_api('map', '/api/describe')
     return render_template('sample.template', last_updates = last_updates)
 
+@app.route('/quality/')
+@flask_login.login_required
+def quality():
+    sample_name = request.args.get("sample_name")
+    if len(sample_name) == 0:
+        return render_template('quality.template',
+                           sample_name = 'Invalid',
+                               quality = '')
+    else:
+        quality  = get_quality(sample_name)
+        if sample_name in quality:
+            return render_template('quality.template',
+                           sample_name = sample_name,
+                           quality = quality)
+        else:
+            render_template('quality.template',
+                           sample_name = 'No quality data found',
+                               quality = '')
+
 @app.route('/sample/map/')
 @flask_login.login_required
 def sample_map():
@@ -190,7 +213,6 @@ def sample_map():
             map_y = 'Not found'
             herd_id = 'Not found'
             eartag = 'Not found'
-
 
     return render_template('map.template',
                            sample_name = sample_name,
@@ -310,10 +332,18 @@ def sample_neighbour():
                            movement_data = movement_data
     )
 
+@functools.lru_cache(maxsize=None)
+def get_samplelist():
+    return call_api('map', '/api/coordinates')
+
+@functools.lru_cache(maxsize=None)
+def get_quality(sample_name):
+    return call_api('quality', '/data_quality_api/{0}'.format(sample_name))
+
 @app.route('/samplelist')
 @flask_login.login_required
 def samplelist():
-    sample_list = call_api('map', '/api/coordinates')
+    sample_list = get_samplelist()
     return render_template('samplelist.template', sample_list=sample_list)
 
 @app.route('/scorelist')
@@ -367,7 +397,7 @@ def herd():
                 cph.append([k, v, int(n)])
     return render_template('herd.template', cph=cph )
 
-import functools
+
 
 @functools.lru_cache(maxsize=None)
 def lookup(names):
