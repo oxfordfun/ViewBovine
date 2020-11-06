@@ -16,10 +16,10 @@
             <th><a href="#">Ear Tag </a></th>
 	    <th><a href="#">Oxford ID </a></th>
             <th><a href="#">Name</a></th>
-            <th><a href="#">Year </a></th>
             <th><a href="#">ACGT</a></th>
 	    <th><a href="#">MTB</a></th>
             <th><a href="#">Test Date</a></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -32,7 +32,6 @@
             <td>{{ sample[7] }}</td>
 	    <td>{{ sample[8] }}</td>
             <td>{{ sample[0] }}</td>
-            <td>{{ sample[6] }}</td>
 	    <td>{{ sample[9] }}</td>
 	    <td>{{ sample[10] }}</td>
             <td>{{ date }}</td>
@@ -43,9 +42,12 @@
                             <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ sample[0] }}" />
                             <input type="submit" value="Detail" id="sample_search" class="btn-link" />
                         </span>
-                    </form>     
+                    </form>
                 </div>          
             </td>
+	    <td>
+	      <a href="/quality/?sample_name={{ sample[0] }}">Quality</a>
+	    </td>
         </tr>
     {% endfor %}
     </tbody>

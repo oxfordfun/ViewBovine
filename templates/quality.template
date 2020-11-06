@@ -4,12 +4,19 @@
 {% block content %}
 
     <h2>{{ sample_name}}</h2>
-    <h4> MTB Reads </h4>
-    
-    <h4> ACGT Quality </h4>
 
     {% if quality != '' %}
-        <p>{{ quality }}</p>
+        {% for k, v in quality.items() %}
+	    {% for sample_id, quality in v.items() %}
+                <hr/>
+                <h4>Oxford ID: <strong>{{ sample_id }}</strong></h4>
+		<p>Identified name: <strong>{{ quality['MTC'][5] }}</strong></p>
+		<p>Percentage of reads covered: <strong>{{ quality['MTC'][0] }}</strong></p>
+		<p>Number of reads covered: <strong>{{ quality['MTC'][1] }}</strong></p>
+		<p>Number of reads assigned: <strong>{{ quality['MTC'][2] }}</strong></p>
+                <p>ACGT percentage: <strong>{{ quality['ACGT']}}</strong></p>
+	     {% endfor %}
+	{% endfor %}
     {% else %}
         <p> No quality qata found.</p>
     {% endif %}

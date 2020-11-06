@@ -12,9 +12,9 @@
 </form>
 {% if sample_guid != 'Not found' %}
 <div class="pull-right">
-    <a class="btn-warning btn" href="/quality/?sample_name={{ sample_name }}">Quality Data</a>
     <a class="btn-warning btn" href="/sample/neighbour/?sample_guid={{ sample_guid }}">Genetic Related</a>
     <a class="btn-warning btn" href="/tree?sample_guids={{ sample_guid }}&get_tree_for_sample=true"">Phylogeny Tree</a>
+    <a class="btn-warning btn" href="/quality/?sample_name={{ sample_name }}">Quality Data</a>
 </div>
 {% endif %}
 
