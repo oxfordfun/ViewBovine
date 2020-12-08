@@ -4,7 +4,14 @@
 {% block content %}
 
     <h2>{{ sample_name}}</h2>
-
+    <div>
+    <form action="/sample/map/">
+             <span>
+                 <input type="text" , class="form-input hidden alert-link" name="sample_name" id="sample_name" value="{{ sample_name }}" />
+                 <h4><input type="submit" value="Sample Detail" id="sample_search" class="btn-link" /></h4>
+             </span>
+    </form>
+    </div>
     {% if quality != '' %}
         {% for k, v in quality.items() %}
 	    {% for sample_id, quality in v.items() %}
@@ -14,7 +21,7 @@
 		<p>Percentage of reads covered: <strong>{{ quality['MTC'][0] }}</strong></p>
 		<p>Number of reads covered: <strong>{{ quality['MTC'][1] }}</strong></p>
 		<p>Number of reads assigned: <strong>{{ quality['MTC'][2] }}</strong></p>
-                <p>ACGT percentage: <strong>{{ quality['ACGT']}}</strong></p>
+                <p>ACGT percentage: <strong>{{ quality['ACGT'] * 100}}</strong></p>
 	     {% endfor %}
 	{% endfor %}
     {% else %}
