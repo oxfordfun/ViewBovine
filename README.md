@@ -4,12 +4,12 @@ bTB Whole Genome Sequencing Application
 ![Cover of ViewBovine](https://github.com/misssoft/Fan.Flask/raw/master/cover.png)
 
 # Prerequisites
-    apt install python3-flask python3-requests
+    pip3 install -r requirements
 
 # Install and Run
-    git clone https://github.com/aphascience/bTBWGS.git
-    cd bTBWGS
-    python main.py
+    git clone https://github.com/oxfordfun/ViewBovine
+    cd ViewBovine
+    python3 main.py
     
 # Technology Stack
 1. Python Flask (http://flask.pocoo.org/)
