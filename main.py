@@ -56,16 +56,16 @@ def setup_logging():
 setup_logging()
 logger = logging.getLogger("fan_logger")
 
-quality_map = collections.defaultdict(int) # sample name to p value
+#quality_map = collections.defaultdict(int) # sample name to p value
 
-def make_quality_map():
-    with open('../data/sample_quality.csv') as f:
-        lines = f.readlines()
-    for line in lines:
-        elems = line.strip().split(',')
-        quality_map[elems[1].strip()] = elems[2].strip()
+#def make_quality_map():
+#    with open('../data/sample_quality.csv') as f:
+#        lines = f.readlines()
+#    for line in lines:
+#        elems = line.strip().split(',')
+#        quality_map[elems[1].strip()] = elems[2].strip()
 
-make_quality_map()
+#make_quality_map()
 
 def allowed_file(filename):
     allowed_extensions = app.config['ALLOWED_EXTENSIONS']
