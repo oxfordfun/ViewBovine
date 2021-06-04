@@ -17,7 +17,7 @@
 	    <th><a href="#">Oxford ID </a></th>
             <th><a href="#">Name</a></th>
             <th><a href="#">ACGT</a></th>
-	    <th><a href="#">MTB</a></th>
+	    <th><a href="#">MTBC</a></th>
             <th><a href="#">Test Date</a></th>
             <th></th>
             <th></th>
@@ -45,8 +45,9 @@
                     </form>
                 </div>          
             </td>
-	    <td>
-	      <a href="/quality/?sample_name={{ sample[0] }}">Quality</a>
+	    <td>{% if sample[9] and sample[10] %}
+	            <a href="/quality/?sample_name={{ sample[0] }}">Quality</a>
+		{% endif %}
 	    </td>
         </tr>
     {% endfor %}

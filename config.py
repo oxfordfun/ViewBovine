@@ -45,6 +45,6 @@ class SwanseaProductionConfig(Config):
     APP_PORT = 5080
     TREE_SERVER = 'http://127.0.0.1:5008'
     MAP_SERVER = 'http://127.0.0.1:5007'
-    QUALITY_SERVER = 'http://192.168.7.30:7000'
+    QUALITY_SERVER = 'http://127.0.0.1:7000'
     UPLOAD_FOLDER = '/tmp/uploads'
     ALLOWED_EXTENSIONS = set(['csv','tsv'])
