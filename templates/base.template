@@ -55,7 +55,7 @@
 
       <hr />
       <footer>
-        <p>Version {{ version }}. Developed by Fan&Denis &copy; 2020 - Modernising Medical Microbiology, Nuffield Department of Medicine, University of Oxford</p>
+        <p>Version {{ version }}. Developed by Fan&Denis 2018-2021 Modernising Medical Microbiology, Nuffield Department of Medicine, University of Oxford</p>
       </footer>
     </div>
     
